@@ -1,0 +1,28 @@
+<div class="show-collection-page">
+  <div>
+    <h1>How to Remove Unit Prices from Shopify Collections Pages</h1>
+    <p>Here is a quick guide to setup this feature.</p>
+  </div>
+  <div>
+    <h2>1. Open your theme's code</h2>
+    <p>From your admin dashboard, in the menu on the left side, click Online Store then from the 'Actions' dropdown select the 'Edit code' option.</p>
+    <%= image_tag "step1.png" %>
+    <br>
+  </div>
+  <div>
+    <h2>2. Open the file called "product-card-grid.liquid" in "Snippets" folder on the left side.</h2>
+    <p><strong>Note:</strong> if you don't see the "product-card-grid.liquid" file, or the {{ product.price | money }} code, don't worry! just email us at <a class="blue-link" href="mailto:info@appsbysimple.com">info@appsbysimple.com</a> and we'll take care of it for you.</p>
+    <%= image_tag "step2.png" %>
+    <br>
+  </div>
+  <div>
+    <h2>3. Remove the snippet of code</h2>
+    <p>
+      <span>On the right side of the screen, find and remove this line of code:</span><br>
+      <code><%= '<div class="insert-unit-pricing" data-product="{{ product.id }}"></div>' %></code>
+      <span></span>
+    </p>
+    <%= image_tag "step3_2.png" %>
+    <br>
+  </div>
+</div>

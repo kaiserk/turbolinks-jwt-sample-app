@@ -1,0 +1,69 @@
+<% meta title: "Dashboard", description: "Unit Pricer for Shopify." %>
+
+<script src="https://unpkg.com/@shopify/app-bridge@2"></script>
+<script>
+    var AppBridge = window['app-bridge'];
+    var actions = window['app-bridge'].actions;
+</script>
+
+<div class="mb-30">
+    <%= render 'shared/search' %>
+</div>
+
+<div class="mb-50">
+  <p class="font-16">Unit prices will be shown on the <b>individual products' pages</b>. If you'd like to also <b>display</b> unit prices on <b>Collection pages</b> (where people can see many different products), please <%= link_to 'click here', show_collection_path, {:class => 'blue-link underlined-link'} %> and follow the instructions.</p>
+  <p class="font-16">If you'd like to <b>remove</b> unit prices from <b>Collection pages</b> (where people can see many different products), please <%= link_to 'click here', manual_uninstall_path, {:class => 'blue-link underlined-link'} %> and follow the instructions.</p>
+  <p class="font-16">Also, before <b>uninstalling</b> Unit Pricer from your store, please <%= link_to 'click here', manual_uninstall_path, {:class => 'blue-link underlined-link'} %> and follow the instructions.</p>
+</div>
+
+<% if @shopify_products && @shopify_products.length > 0 %>
+<div>
+  <h4>Products without unit price set</h4>
+
+  <table class='table edit-unit-pricing-table'>
+  <tbody>
+    <% @shopify_products.each do |result| %>
+      <tr><%= render partial: "products/form", locals: {product: result} %></tr>
+    <% end %>
+    <tr>
+      <td class="save-all-container" colspan="3" align="right"><div class="save btn btn-success save-all">Save All</div></td>
+    </tr>
+  </tbody>
+  </table>
+
+  <%= form_tag(:bulk, id: "saveAllForm") %>
+</div>
+<% end %>
+
+<script>
+$(function() {
+  $('[data-toggle="tooltip"]').tooltip({ trigger: "hover"});
+
+  $('input#product_units').on('keypress', function() {
+    console.log('entering values into the unit quantity field.');
+    $(this).parents('tr').children('td').eq(-1).find('.save').fadeIn()
+  })
+
+  // prevent bugs from 'enter' keypress
+  $('#search-query').bind('keypress', function(e) {
+  	if(e.keyCode==13){
+      $('#submit-search').click();
+  	}
+  });
+
+  $('#submit-search').on('click', search);
+
+  function search(e) {
+    e.preventDefault();
+
+    var product_id = $('#search-query').val();
+    if (product_id.length > 1) { window.location.href = '/results/' + product_id; }
+    else {
+      $('#search-query').val('');
+      $('#search-query').focus();
+      swal('Provide at least a few letters to narrow your search.');
+    }
+  }
+
+})
+</script>

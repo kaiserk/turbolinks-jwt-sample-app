@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: 'splash_page#index'
   get '/home', to: 'home#index', as: :home
   get '/products', to: 'products#index'
+  get '/dashboard', to: 'dashboard#index'
   resources :widgets
   get 'splash_page/index', to: 'splash_page#index'
   mount ShopifyApp::Engine, at: '/'

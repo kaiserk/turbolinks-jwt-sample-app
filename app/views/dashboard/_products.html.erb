@@ -1,0 +1,28 @@
+<table class="table">
+  <thead>
+    <td><b>Product</b></td>
+    <td><b>Unit Quantity</b></td>
+  </thead>
+  <tbody>
+    <% @shopify_products.each_with_index do |product, idx| %>
+      <tr>
+        <td style='vertical-align:middle'>
+          <% if product.image.present? %>
+            <%= image_tag product.image.src, class: 'img img-thumbnail', style: 'max-width: 50px' %>
+          <% end %>
+          <%= link_to product.title, "https://#{@shop_session.url}/admin/products/#{product.id}", target: "_blank" %></td>
+        <td>
+          <%= simple_form_for(@product) do |f| %>
+            <%= f.input :title, label: false, input_html: {value: product.title, hidden: true} %>
+            <%= f.input :shopify_id, label: false, input_html: {value: product.id, hidden: true} %>
+            <%= f.input :product_price, label: false, input_html: {value: product.variants.first.price, hidden: true} %>
+            <%= f.input :units, label: false, input_html: {value: product_units(product)} %>
+        </td>
+        <td style='vertical-align:middle'>
+          <%= f.submit value: 'Save', class: 'save btn btn-success', id: "save-##{idx}" %>
+        </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

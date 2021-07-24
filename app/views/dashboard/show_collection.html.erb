@@ -1,0 +1,34 @@
+<div class="show-collection-page">
+  <div>
+    <h1>How to Display Unit Prices on Shopify Collections Pages</h1>
+    <p>Here is a quick guide to setup this feature.</p>
+  </div>
+  <div>
+    <h2>1. Open your theme's code</h2>
+    <p>From your admin dashboard, in the menu on the left side, click Online Store then from the 'Actions' dropdown select the 'Edit code' option.</p>
+    <%= image_tag "step1.png" %>
+    <br>
+  </div>
+  <div>
+    <h2>2. Open the file called "product-card-grid.liquid" in "Snippets" folder on the left side.</h2>
+    <p><strong>Note:</strong> if you don't see the "product-card-grid.liquid" file, or the {{ product.price | money }} code, don't worry! just email us at <a class="blue-link" href="mailto:info@appsbysimple.com">info@appsbysimple.com</a> and we'll take care of it for you.</p>
+    <%= image_tag "step2.png" %>
+    <br>
+  </div>
+  <div>
+    <h2>3. Plant a snippet of code</h2>
+    <p>
+      <span><strong>3.1.</strong> On the right side of the screen, find this line of code:</span><br>
+      <code>{% include 'product-price', variant: product %}</code>
+    </p>
+    <%= image_tag "step3_1.png" %>
+    <br>
+    <p>
+      <span><strong>3.2.</strong> Then, directly after that line of code, paste this:</span><br>
+      <code><%= '<div class="insert-unit-pricing" data-product="{{ product.id }}"></div>' %></code><br>
+      <span><strong>Note:</strong> Where you will put this line of code, there will be shown the product's unit price.</span>
+    </p>
+    <%= image_tag "step3_2.png" %>
+    <br>
+  </div>
+</div>
