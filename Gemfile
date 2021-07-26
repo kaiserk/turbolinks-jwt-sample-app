@@ -58,4 +58,8 @@ gem 'shopify_app', '~> 17.1.0'
 # additional
 gem 'metamagic'
 gem 'simple_form'
+gem "font-awesome-rails"
+gem 'will_paginate'
+
+
 
