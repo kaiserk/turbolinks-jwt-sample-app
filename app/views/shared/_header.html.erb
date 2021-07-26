@@ -1,0 +1,38 @@
+<div class="palette-wet-asphalt fixed">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center" id="status">
+        <span class="loading"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <h1>Unit Pricer</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="demo-row">
+  <% if @shop && @shop.charge_id? %>
+  <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+    <div class="container">
+      <div class="row">
+        <div class="navbar-collapse text-center">
+          <ul class="nav navbar-nav">
+            <li><%= link_to 'Dashboard', dashboard_path %></li>
+            <% if @shop.products.count > 0 %><li><%= link_to 'Unit Prices', products_path %></li><% end %>
+            <li><%= link_to 'Settings', preferences_path %></li>
+            <li><a id="help" href="mailto:info@appsbysimple.com" target="_blank">Help</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav><!-- /navbar -->
+  <% end %>
+</div> <!-- /row -->

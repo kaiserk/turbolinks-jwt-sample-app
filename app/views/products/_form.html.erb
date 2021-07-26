@@ -1,0 +1,51 @@
+<td width="100px" height="100px" style="vertical-align: middle;">
+  <%= image_tag product_image(product), class: 'img img-thumbnail' %>
+</td>
+<td>
+  (@current_shopify_session.domain if @current_shopify_session)
+  <%= link_to product.title[0..35], "https://#{@current_shopify_session.domain}/admin/products/#{product.id}", target: "_blank" %>
+</td>
+
+<td>
+  <%= simple_form_for(@product, class: "product_form_up", html: { id: "product_form_#{product.id}", style: "display: flex;" } ) do |f| %>
+  <div>
+    <%= f.input :title, label: false, input_html: {value: product.title, hidden: true}, wrapper_html: { class: 'no-margin' } %>
+    <%= f.input :image_url, label: false, input_html: {value: product_image(product), hidden: true}, wrapper_html: { class: 'no-margin' } %>
+    <%= f.input :shopify_id, label: false, input_html: {value: product.id, hidden: true}, wrapper_html: { class: 'no-margin' } %>
+    <% if elligible_variants?(product) %>
+
+      <% if (product.variants.count > 0) %>
+        <% variants = product.variants %>
+        <% cta = 'Configure' %>
+        <% variants.each_with_index do |variant, idx| %>
+          <%= f.simple_fields_for :variants do |v| %>
+            <%= render 'products/variant_fields', f: v, idx: idx, variant: variant %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% cta = 'Edit' %>
+      <% end %>
+
+    <% else %>
+
+      <% cta = 'Save' %>
+      <label data-toggle="tooltip" data-placement="bottom" title="<%= pricing_tooltip %>">Provide a Unit Quantity <%= fa_icon "question" %></label>
+      <%= f.input :units, label: false, required: true, wrapper_html: {class: "unit-input-container"}, input_html: {"data-tooltip" => true, "data-id" => product.id, placeholder: 8, value: product_units(product)} %>
+      <%= f.input :product_price, label: false, input_html: {value: product_price(product), hidden: true}, wrapper_html: { class: 'no-margin' } %>
+      
+    <% end %>
+  </div>
+  <div style="padding: 5px; margin: auto 0 auto auto;">
+    <% if elligible_variants?(product) %>
+      <% if (product.variants.count > 0) %>
+        <%= link_to cta, product_path(product), class: 'btn btn-success' %>
+      <% else %>
+        <%= link_to cta, products_path, class: 'btn btn-success' %>
+      <% end %>
+    <% else %>
+      <%= f.button :submit, cta, class: 'save btn btn-success' %>
+    <% end %>
+
+  </div>
+<% end %>
+</td>

@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <hr>
+      <p class="text-center">
+        <small class="small-65">Built by <a href="https://apps.shopify.com/partners/kulp" target="_blank">Simple Apps</a>
+        </small>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  jQuery(document).ready(function($) {
+    $('form').submit(function(event) {
+      $('body').addClass('wait');
+    });
+    
+    $('.save-all').click(function() {
+        $('.unit-input-container').each(function( index ) {
+            let this_input = $(this).find('input');
+            if (this_input.val() !== '') {
+                $('<input />').attr({
+                    type: "hidden",
+                    name: "bulk_items[" + this_input.attr('data-id') + "]",
+                }).val(this_input.val()).appendTo('#saveAllForm');
+            }
+        });
+        $('#saveAllForm').submit();
+    });
+  });
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-91022506-1', 'auto');
+  ga('send', 'pageview');
+</script>
