@@ -9,7 +9,8 @@ class DashboardController < AuthenticatedController
     # Get all Products with unit set
 
     # current_products = Product.all()
-    current_products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
+    # current_products = ShopifyAPI::Product.find(:all)
+    current_products = Product.all()
     currend_prod_ids = []
     @shopify_products = []
     #Generate array with products' shopify_id
@@ -23,7 +24,7 @@ class DashboardController < AuthenticatedController
       @shopify_products.push(current) if !currend_prod_ids.include?(current.id.to_s)
       break if @shopify_products.count == 20
     end
-    @product = ShopifyAPI::Product.new
+    @product = Product.new
   end
 
   def show_collection

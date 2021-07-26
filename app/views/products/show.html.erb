@@ -1,0 +1,53 @@
+<div class="text-center">
+  <h3><%= @product.title %></h3>
+  <p>Set units for each variant below.</p>
+</div>
+
+<div class="col-md-12">
+  <table class="table">
+    <thead>
+      <th>Option</th>
+      <th class="text-center">Provide a Unit Quantity</th>
+      <th class="text-center">Variant Price</th>
+      <th class="text-center">Variant Unit Price</th>
+    </thead>
+
+    <tbody>
+      <% @product.variants.each do |variant| %>
+        <tr>
+          <%= simple_form_for(variant) do |f| %>
+            <td><%= f.label variant.title %></td>
+            <td align="center"><%= best_in_place variant, :units, as: :input, :data => {:units => variant.units.to_i} %></td>
+            <td align="center" id="price<%= variant.id %>"><%= variant.variant_price %></td>
+            <td align="center" id="unitPrice<%= variant.id %>"><%= variant.unit_price %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    <tbody>
+  </table>
+</div>
+
+<script>
+$(function() {
+  // prevent unintended behavior from 'enter' keypress
+  $('input').bind('keypress', function(e) {
+	if(e.keyCode==13){
+		e.preventDefault();
+	}
+  });
+
+  // inline editing
+  $(document).ready(function() {
+    jQuery(".best_in_place").best_in_place().bind("ajax:success", function(){ 
+      let id = $(this).data('bipUrl').replace('/variants/', '');
+      let price = parseFloat($('#price' + id).html());
+      let unit_price = (price / parseFloat($(this).data('bipValue'))).toFixed(2);
+      $('#unitPrice' + id).html(unit_price);
+      console.log($(this).data());
+    });
+  });
+
+  // tooltips
+  $('[data-toggle="tooltip"]').tooltip();
+})
+</script>

@@ -1,10 +1,72 @@
-<%= link_to 'Back', home_path(shop: @shop_origin) %>
+<%#= link_to 'Back', home_path(shop: @shop_origin) %>
 
-<h2>Products</h2>
+<!--<h2>Products</h2>-->
 
-<ul>
-  <% @products.each do |product| %>
-    <li><%= link_to product.title, "https://#{@current_shopify_session.domain}/admin/products/#{product.id}", target: "_top" %></li>
-  <% end %>
-</ul>
+<!--<ul>-->
+  <%# @products.each do |product| %>
+<!--    <li><%#= link_to product.title, "https://#{@current_shopify_session.domain}/admin/products/#{product.id}", target: "_top" %></li>-->
+  <%# end %>
+<!--</ul>-->
 
+<% meta title: "Unit Prices", description: "Collection of unit prices for your products." %>
+
+<div class="row">
+  <div class="col-md-12">
+
+    <h4 class='text-center'>Click a product's quantity to edit inline.</h4><br>
+    <%= will_paginate @products %>
+
+    <table class="table">
+      <thead>
+      <td><b>Product</b></td>
+      <td data-toggle="tooltip" data-placement="bottom" title="<%= pricing_tooltip %>"><b>Unit Quantity <%= fa_icon "question" %></b></td>
+      </thead>
+      <tbody>
+      <% @products.each_with_index do |product, idx| %>
+        <tr>
+          <td style='vertical-align:middle'>
+            <%= image_tag product.image_url, class: 'img img-thumbnail', onerror: "this.onerror=null;this.src='https://place-hold.it/75x75/white/black.png&text=n/a';" %>
+            <%= link_to product.title, "https://#{@shop_session.url}/admin/products/#{product.shopify_id}", target: "_blank" %>
+          </td>
+          <td>
+            <% if product.variants.count.zero? %>
+              <%= best_in_place product, :units, as: :input, label: false, input_html: {value: product_units(product)} %>
+            <% else %>
+              <%= link_to 'Configure', product_path(product), class: 'btn btn-success' %>
+            <% end %>
+            <%= link_to (fa_icon "trash"), product, method: :delete, data: { confirm: "Are you sure?" }, style: 'float: right', class: 'delete-btn' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= will_paginate @products %>
+
+  </div>
+</div>
+
+<script>
+    $(function() {
+
+        // prevent unintended behavior from 'enter' keypress
+        $('input').bind('keypress', function(e) {
+            if(e.keyCode==13){
+                e.preventDefault();
+            }
+        });
+
+        // inline editing
+        $(document).ready(function() {
+            jQuery(".best_in_place").best_in_place().bind("ajax:success", function(){
+                var quantity = $(this).data('bipValue');
+                if (isNaN(parseFloat(quantity))) {
+                    $(this).html('0.0');
+                }
+            });;
+        });
+
+        // tooltips
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>

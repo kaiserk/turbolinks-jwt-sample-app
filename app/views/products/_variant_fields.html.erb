@@ -1,0 +1,5 @@
+<div class="nested-fields">
+  <%= f.input :title, label: false, as: :hidden, input_html: {value: variant.title, id: "product_variants_attributes_#{idx}_title", name: "product[variants_attributes][#{idx}][title]"} %>
+  <%= f.input :shopify_id, label: false, as: :hidden, input_html: {value: variant_id(variant), id: "product_variants_attributes_#{idx}_shopify_id", name: "product[variants_attributes][#{idx}][shopify_id]"} %>
+  <%= f.input :variant_price, label: false, as: :hidden, input_html: {value: variant_price(variant), id: "product_variants_attributes_#{idx}_variant_price", name: "product[variants_attributes][#{idx}][variant_price]"} %>
+</div>
