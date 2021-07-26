@@ -1,18 +1,20 @@
 class DashboardController < AuthenticatedController
   include SearchesHelper
   
-  before_action :set_shop
-  before_action :check_billing
+  # before_action :set_shop
+  # before_action :check_billing
 
   def index
   	puts "DashboardController index start"
     # Get all Products with unit set
-    current_products = Product.all()
+
+    # current_products = Product.all()
+    current_products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
     currend_prod_ids = []
     @shopify_products = []
     #Generate array with products' shopify_id
     current_products.each do |current|
-      currend_prod_ids.push(current.shopify_id)
+      currend_prod_ids.push(current.id)
     end
     #get all products from shopify
     temp_shopify_products = ShopifyAPI::Product.find(:all)
@@ -21,7 +23,7 @@ class DashboardController < AuthenticatedController
       @shopify_products.push(current) if !currend_prod_ids.include?(current.id.to_s)
       break if @shopify_products.count == 20
     end
-    @product = Product.new
+    @product = ShopifyAPI::Product.new
   end
 
   def show_collection

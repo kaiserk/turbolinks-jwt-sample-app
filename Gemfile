@@ -53,3 +53,8 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'shopify_app', '~> 17.1.0'
+
+
+# additional
+gem 'metamagic'
+

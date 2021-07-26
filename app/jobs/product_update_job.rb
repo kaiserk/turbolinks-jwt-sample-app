@@ -10,4 +10,5 @@ class ProductUpdateJob < ActiveJob::Base
     shop.with_shopify_session do
     end
   end
+
 end
