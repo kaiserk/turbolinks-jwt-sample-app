@@ -1,0 +1,38 @@
+<% if @results && @results.length > 0 %>
+  <div class="mb-30">
+      <%= render 'shared/search' %>
+  </div>
+
+  <h3>Results found...</h3>
+
+  <table class='table edit-unit-pricing-table'>
+  <tbody>
+    <tr>
+      <td class="save-all-container save-all-container-top" colspan="4" align="right"><div class="save btn btn-success save-all">Save All</div></td>
+    </tr>
+    <% @results.each do |result| %>
+      <tr><%= render partial: "products/form", locals: {product: result} %></tr>
+    <% end %>
+    <tr>
+      <td class="save-all-container" colspan="3" align="right"><div class="save btn btn-success save-all">Save All</div></td>
+    </tr>
+  </tbody>
+  </table>
+
+  <%= form_tag(:bulk, id: "saveAllForm") %>
+
+<% else %>
+
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <p>Sorry, no results found.</p>
+    <%= link_to 'Try Again', dashboard_path, class: 'btn btn-success' %>
+  </div>
+
+<% end %>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip({ trigger: "hover"});
+});
+</script>

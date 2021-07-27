@@ -19,14 +19,15 @@
 </div>
 
 <div class="demo-row">
-  <% if @shop && @shop.charge_id? %>
+  <%# if @shop && @shop.charge_id? %>
   <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
     <div class="container">
       <div class="row">
         <div class="navbar-collapse text-center">
           <ul class="nav navbar-nav">
             <li><%= link_to 'Dashboard', dashboard_path %></li>
-            <% if @shop.products.count > 0 %><li><%= link_to 'Unit Prices', products_path %></li><% end %>
+<!--            <%# if @shop.products.count > 0 %><li><%#= link_to 'Unit Prices', products_path %></li><%# end %>-->
+            <li><%= link_to 'Unit Prices', products_path %></li>
             <li><%= link_to 'Settings', preferences_path %></li>
             <li><a id="help" href="mailto:info@appsbysimple.com" target="_blank">Help</a></li>
           </ul>
@@ -34,5 +35,5 @@
       </div>
     </div>
   </nav><!-- /navbar -->
-  <% end %>
+  <%# end %>
 </div> <!-- /row -->

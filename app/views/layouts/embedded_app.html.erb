@@ -2,6 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <%= metamagic site: "Unit Pricer for Shopify", title: [:site, :title], separator: " | " %>
+    <script src="//cdn.shopify.com/s/assets/external/app.js?<%= Time.now.strftime('%Y%m%d%H') %>"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
     <% application_name = ShopifyApp.configuration.application_name %>
     <title><%= application_name %></title>
     <%= stylesheet_link_tag 'application' %>
@@ -10,10 +13,26 @@
     <% else %>
       <%= javascript_include_tag 'application', "data-turbolinks-track" => true %>
     <% end %>
+    <%= stylesheet_link_tag 'application' %>
+    <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
   </head>
 
   <body>
+
+    <%= render 'shared/header' %>
+    <div class="container">
+      <%= render 'shared/messages' %>
+    </div>
+    <div class="container section" data-section="message">
+      <div class="row">
+        <div class="col-xs-12">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    <%= render 'shared/footer' %>
+
     <div class="app-wrapper">
       <div class="app-content">
         <main role="main">

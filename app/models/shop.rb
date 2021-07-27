@@ -21,9 +21,9 @@ class Shop < ActiveRecord::Base
   # after_create :update_slack
   after_create :set_default_currency
 
-  # def self.store(session)
-  #   shop = self.find_or_create_by(shopify_domain: session.url)
-  #   shop.token = session.token
+  # def self.store(shopify_session)
+  #   shop = self.find_or_create_by(shopify_domain: shopify_session.url)
+  #   shop.shopify_token = shopify_session.token
   #   shop.save!
   #   shop.id
   # end
