@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row text-center">
+  <div class="col-md-1"></div>
+
+  <div class="col-md-10">
+    <table class="table">
+      <thead>
+        <th class="text-center">Currency</th>
+        <th class="text-center">Label Text</th>
+        <th class="text-center">Variant Text</th>
+      </thead>
+
+      <tbody>
+        <td align="center"><%= @preference.get_friendly_currency %></td>
+        <td align="center"><%= @preference.label_text %></td>
+        <td align="center"><%= @preference.variant_label_text %></td>
+      </tbody>
+    </table>
+
+    <%= link_to 'Edit Preferences', edit_preference_path(@preference), class: 'btn btn-success' %>
+  </div>
+</div>

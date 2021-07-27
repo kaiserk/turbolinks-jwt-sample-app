@@ -1,0 +1,33 @@
+<%= simple_form_for(@preference) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :currency, collection: Preference::CURRENCIES.keys, include_blank: 'Please Select', selected: f.object.get_currency_code %>
+    <div style="display: none;" id class="form-group string optional other_currency">
+      <label class="control-label string optional" for="other_currency">Curreny Symbol: (e.g. $, £, ₽, zł, ¥, etc. )</label>
+      <input class="form-control string optional" placeholder="Curreny symbol" type="text" value="<%= @preference.currency %>" name="other_currency" id="other_currency">
+    </div>
+    <%= f.input :label_text, label: 'Product Label (beside price on product details page)', placeholder: 'Per Unit:' %>
+    <%= f.input :collection_label_text, label: 'Collection Label for multiple variant products (instead of price on Collections grid)', placeholder: 'Click here for more details' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-success pull-right' %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    if ($('#preference_currency').val() === 'Other') {
+      $('.other_currency').show();
+    }
+    
+    $('#preference_currency').change(function(event) {
+      if ($(this).val() === 'Other') {
+        $('.other_currency').show();
+      } else {
+        $('.other_currency').hide();
+      }
+    });
+  });
+</script>
