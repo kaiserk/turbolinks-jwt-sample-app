@@ -54,7 +54,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'shopify_app', '~> 17.1.0'
 
-
 # additional
 gem 'metamagic'
 gem 'simple_form'
@@ -63,6 +62,10 @@ gem 'will_paginate'
 gem 'curb'
 gem 'best_in_place'
 gem 'actionview'
+gem 'jquery-turbolinks'
+
+gem 'sweet-alert-confirm'
+gem 'sweetalert-rails', '~> 1.1', '>= 1.1.3'
 
 # additional experimental extras
 gem 'twitter-bootstrap-rails'
@@ -70,7 +73,6 @@ gem 'devise'
 gem 'gravatarify'
 gem 'bootstrap-sass'
 gem 'figaro'
-gem 'sweet-alert-confirm'
 gem 'thor'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'sucker_punch'
