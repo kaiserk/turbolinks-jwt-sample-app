@@ -60,6 +60,11 @@ gem 'metamagic'
 gem 'simple_form'
 gem "font-awesome-rails"
 gem 'will_paginate'
+gem 'curb'
+gem 'best_in_place'
+gem 'actionview'
+
+
 
 
 
