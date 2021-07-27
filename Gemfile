@@ -65,7 +65,7 @@ gem 'actionview'
 gem 'jquery-turbolinks'
 
 gem 'sweet-alert-confirm'
-gem 'sweetalert-rails', '~> 1.1', '>= 1.1.3'
+gem 'sweetalert-rails', '~> 1.1', '>= 1.1.3' # added on error
 
 # additional experimental extras
 gem 'twitter-bootstrap-rails'
