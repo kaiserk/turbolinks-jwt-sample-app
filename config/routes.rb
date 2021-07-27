@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # root  'dashboard#index' # old way
   root to: 'splash_page#index'
   get '/home', to: 'home#index', as: :home
   get '/products', to: 'products#index'
@@ -11,6 +12,9 @@ Rails.application.routes.draw do
   post 'products/bulk', to: 'products#bulk', as: 'bulk'
   resources :preferences
   resources :variants
+
+  # in-app UX
+  get 'results/:query', to: 'searches#show'
 
   # ajax calls from shop
   get 'unit_prices/:shopify_id', to: "unit_prices#show"
