@@ -2,8 +2,10 @@
   <%= image_tag product_image(product), class: 'img img-thumbnail' %>
 </td>
 <td>
-  (@current_shopify_session.domain if @current_shopify_session)
+<!--  (@current_shopify_session.domain if @current_shopify_session)-->
   <%= link_to product.title[0..35], "https://#{@current_shopify_session.domain}/admin/products/#{product.id}", target: "_blank" %>
+  <%#= link_to product.title[0..35], "https://#{@shop_session.url}/admin/products/#{product.id}", target: "_blank" %>
+
 </td>
 
 <td>

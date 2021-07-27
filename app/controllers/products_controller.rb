@@ -4,7 +4,9 @@ class ProductsController < AuthenticatedController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   def index
-    @products = @shop.products.paginate(:page => params[:page], :per_page => 30)
+    # @products = @shop.products.paginate(:page => params[:page], :per_page => 30)
+    @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
+    # @products = shopify_products.paginate(:page => params[:page], :per_page => 30)
   end
 
   def create

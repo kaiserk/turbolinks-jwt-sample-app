@@ -64,6 +64,25 @@ gem 'curb'
 gem 'best_in_place'
 gem 'actionview'
 
+# additional experimental extras
+gem 'twitter-bootstrap-rails'
+gem 'devise'
+gem 'gravatarify'
+gem 'bootstrap-sass'
+gem 'figaro'
+gem 'sweet-alert-confirm'
+gem 'thor'
+gem 'rack-cors', :require => 'rack/cors'
+gem 'sucker_punch'
+gem 'cocoon'
+gem 'delayed_job_active_record'
+gem 'daemons'
+
+# packages above this line works fine
+gem 'uglifier'
+gem 'coffee-rails'
+gem 'jquery-rails'
+gem 'sdoc', '~> 0.4.0', group: :doc
 
 
 

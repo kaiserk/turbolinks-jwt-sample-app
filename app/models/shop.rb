@@ -18,25 +18,25 @@ class Shop < ActiveRecord::Base
   has_many :variants, through: :products
   has_one :preference, :dependent => :destroy
 
-  after_create :update_slack
+  # after_create :update_slack
   after_create :set_default_currency
 
-  def self.store(session)
-    shop = self.find_or_create_by(domain: session.url)
-    shop.token = session.token
-    shop.save!
-    shop.id
-  end
+  # def self.store(session)
+  #   shop = self.find_or_create_by(shopify_domain: session.url)
+  #   shop.token = session.token
+  #   shop.save!
+  #   shop.id
+  # end
 
   def self.retrieve(id)
     if shop = self.where(id: id).first
-      ShopifyAPI::Session.new(shop.domain, shop.token)
+      ShopifyAPI::Session.new(shop.shopify_domain, shop.shopify_token)
     end
   end
 
-  def update_slack
-    SlackBot.ping "new Unit Pricer install (not activated): #{self.domain}"
-  end
+  # def update_slack
+  #   SlackBot.ping "new Unit Pricer install (not activated): #{self.shopify_domain}"
+  # end
 
   def set_default_currency
     puts self.to_json
@@ -50,7 +50,7 @@ class Shop < ActiveRecord::Base
     # can't remotely destroy when token non-existence
     # DestroyMetafieldsJob.perform_async(self)
     DestroySnippetJob.perform_async(self)
-    SlackBot.ping "Unit Pricer charge cancelled: #{self.domain}"
+    SlackBot.ping "Unit Pricer charge cancelled: #{self.shopify_domain}"
   end
 
   def credit_account(amount)
@@ -61,7 +61,7 @@ class Shop < ActiveRecord::Base
       }
     }
 
-    resp = Curl.post("https://#{self.domain}/admin/application_credits.json?access_token=#{self.token}", params.to_json)
+    resp = Curl.post("https://#{self.shopify_domain}/admin/application_credits.json?access_token=#{self.token}", params.to_json)
     resp.status.include?('20')
   end
 
@@ -81,7 +81,7 @@ class Shop < ActiveRecord::Base
   end
 
   def sessionize
-    session = ShopifyAPI::Session.new(self.domain, self.token)
+    session = ShopifyAPI::Session.new(self.shopify_domain, self.token)
     ShopifyAPI::Base.activate_session(session)
   end
 
