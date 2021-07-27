@@ -24,10 +24,10 @@
       <tbody>
       <% @products.each_with_index do |product, idx| %>
         <tr>
-          <td style='vertical-align:middle'>
-            <%= image_tag product.image_url, class: 'img img-thumbnail', onerror: "this.onerror=null;this.src='https://place-hold.it/75x75/white/black.png&text=n/a';" %>
-            <%= link_to product.title, "https://#{@shop_session.url}/admin/products/#{product.shopify_id}", target: "_blank" %>
-          </td>
+<!--          <td style='vertical-align:middle'>-->
+            <%#= image_tag product.image_url, class: 'img img-thumbnail', onerror: "this.onerror=null;this.src='https://place-hold.it/75x75/white/black.png&text=n/a';" %>
+            <%#= link_to product.title, "https://#{@shop_session.url}/admin/products/#{product.shopify_id}", target: "_blank" %>
+<!--          </td>-->
           <td>
             <% if product.variants.count.zero? %>
               <%= best_in_place product, :units, as: :input, label: false, input_html: {value: product_units(product)} %>
