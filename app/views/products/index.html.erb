@@ -14,7 +14,7 @@
   <div class="col-md-12">
 
     <h4 class='text-center'>Click a product's quantity to edit inline.</h4><br>
-    <%#= will_paginate @products %>
+    <%= will_paginate @products %>
 
     <table class="table">
       <thead>
@@ -26,9 +26,6 @@
         <tr>
           <td style='vertical-align:middle'>
             <%#= image_tag product.image_url, class: 'img img-thumbnail', onerror: "this.onerror=null;this.src='https://place-hold.it/75x75/white/black.png&text=n/a';" %>
-            <% if product.image_url.present? %>
-              <%= image_tag product.image.src, class: 'img img-thumbnail', style: 'max-width: 50px' %>
-            <% end %>
             <%= link_to product.title, "https://#{@current_shopify_session.domain}/admin/products/#{product.shopify_id}", target: "_blank" %>
           </td>
           <td>
@@ -44,7 +41,7 @@
       </tbody>
     </table>
 
-    <%#= will_paginate @products %>
+    <%= will_paginate @products %>
 
   </div>
 </div>

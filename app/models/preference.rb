@@ -1,4 +1,4 @@
-class Preference < ActiveRecord::Base
+class Preference < ApplicationRecord
   belongs_to :shop
 
   CURRENCIES = {'AUD' => 'AU$', 'DKK' => 'kr', 'EUR' => '€', 'GBP' => '£', 'CHF' => 'SFr. ', 'USD' => '$', 'Other' => ''}
@@ -9,7 +9,7 @@ class Preference < ActiveRecord::Base
     return true unless self.shop.theme_scope_enabled? # => legacy users don't have this feature
     return true if self.shop.snippet_locked? # => legacy users don't have this feature
 
-    #SnippetService.create_or_update(self.shop)
+    SnippetService.create_or_update(self.shop)
   end
 
   def get_friendly_currency

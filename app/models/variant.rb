@@ -1,4 +1,4 @@
-class Variant < ActiveRecord::Base
+class Variant < ApplicationRecord
   include Metafields
 
   belongs_to :product

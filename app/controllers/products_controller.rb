@@ -1,15 +1,28 @@
+# class ProductsController < AuthenticatedController
+#   def index
+#     @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
+#     render(json: { products: @products })
+#   end
+# end
+
 class ProductsController < AuthenticatedController
   include SearchesHelper
   before_action :set_shop
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   def index
+    @shop_origin = current_shopify_domain
     @products = @shop.products.paginate(:page => params[:page], :per_page => 30)
     # @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
     # @products = shopify_products.paginate(:page => params[:page], :per_page => 30)
+
+    # @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
+    # render(json: { products: @products })
   end
 
   def create
+    puts "**** about to save ****"
+
     @product = @shop.products.new(product_params.except(:variants_attributes))
     if product_params[:variants_attributes]
       product_params[:variants_attributes].each {|v| @product.variants.new(v[1])}
@@ -30,6 +43,7 @@ class ProductsController < AuthenticatedController
   end
 
   def show
+    puts 'aShowing products...'
     if !@product
       product_object = ShopifyAPI::Product.find(params[:id])
 
@@ -69,6 +83,7 @@ class ProductsController < AuthenticatedController
 
   def update
     respond_to do |format|
+      # if @product.update_attributes(product_params)
       if @product.update_attributes(product_params)
         flash[:notice] = 'Product units updated successfully.'
         format.json { respond_with_bip(@product) }

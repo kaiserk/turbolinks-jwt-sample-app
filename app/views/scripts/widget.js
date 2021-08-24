@@ -1,3 +1,7 @@
+// require('dotenv').config();
+
+var host = "https://512afbc47b5b.ngrok.io";
+
 var loadScript = function(url, callback){
 
     /* JavaScript that will load the jQuery library on Google's CDN.
@@ -26,13 +30,15 @@ var loadScript = function(url, callback){
 };
 
 var unitPricing = {
-  initiate: function(jQuery191) {
+
+    initiate: function(jQuery191) {
+
     // dont load on unsupported or unwanted pages
     if (!this.isWidgetEnabled()) {return false;}
 
     else {
       //Load Stylesheet
-      var root = '<%= ENV["HOST"] %>',
+      var root = host,
           head = document.getElementsByTagName('head')[0],
           stylesheet = document.createElement('link');
 
@@ -43,19 +49,23 @@ var unitPricing = {
 
       $ = window.jQuery;
       console.log('Unit Pricing initiated.');
+
       this.getProductIdAndUnitPrice($);
 
       $('.insert-unit-pricing').each(function(index, el) {
-        let product_id = $(this).attr('data-product');
-        unitPricing.getUnitPriceForCollections(product_id, $(this));
+          let product_id = $(this).attr('data-product');
+          console.log('product id: ' + product_id);
+          unitPricing.getUnitPriceForCollections(product_id, $(this), $);
       });
 
       $('.single-option-selector').change(function() {
-        variant_id = window.location.href.split('variant=');
-        variant_id = variant_id[1];
-        unitPricing.getUnitPrice(variant_id, true);
-        console.log(variant_id);
+          variant_id = window.location.href.split('variant=');
+          variant_id = variant_id[1];
+          unitPricing.getUnitPrice(variant_id, true, $);
+          console.log('variant_id: ' + variant_id);
       });
+
+
     }
   },
 
@@ -78,8 +88,6 @@ var unitPricing = {
     return enabled;
   },
 
-
-
   // deprecated - a collections url can still contain product (ie: collections/product-feed/products/coca-cola)
   isCollectionsPage: function() {
     var is_collection = false;
@@ -101,25 +109,33 @@ var unitPricing = {
         url: page_url + '.json',
         success: function(data) {
           var product_id = data.product.id;
-          unitPricing.getUnitPrice(product_id, false);
+          console.log('product_id: ' + product_id);
+          unitPricing.getUnitPrice(product_id, false, $);
         }
     })
 
     var variant = $('#ProductSelect-product-template');
     if (!(variant == undefined || variant.length == 0)) {
       var variant_id = $('#ProductSelect-product-template option:selected').val();
-      unitPricing.getUnitPrice(variant_id, true);
+      console.log('variant_id: ' + variant_id);
+      unitPricing.getUnitPrice(variant_id, true, $);
     }
 
   },
 
-  getUnitPriceForCollections: function(product_id, this_element) {
+  getUnitPriceForCollections: function(product_id, this_element, $) {
+    let shop = Shopify.shop;
     $.ajax({
-      url: '<%= ENV["HOST"] %>' + '/unit_prices/' + product_id,
+      // url: '<%= ENV["HOST"] %>' + '/unit_prices/' + product_id,
+      url: host + '/unit_prices/' + product_id,
       method: 'get',
+      data: new URLSearchParams({'shop_url': shop}).toString(),
       success: function(data) {
+        console.log(product_id);
+        console.log(data);
         let unit_price = data.unit_price;
-        let collection_label_text = '<%= @shop.preference.collection_label_text %>';
+        // let collection_label_text = '<%= @shop.preference.collection_label_text %>';
+        let collection_label_text = data.collection_label_text;
         let units = data.units;
         let content = '';
 
@@ -127,11 +143,11 @@ var unitPricing = {
             content = '<div><span id="unit-price-label">' + collection_label_text + '</span></div>';
         } else {
           if (unit_price > 0) {
-            let delimiter = '<%= @shop.preference.delimiter %>';
+            let delimiter = data.delimiter;
             let display_price = unit_price.toString().replace('.', delimiter);
               content = '<div><span id="unit-price-label">' + 
-                '<%= @shop.preference.label_text %>&nbsp;' + 
-                '<span id="unit-price-currency"><%= @shop.preference.currency %></span>' + 
+                data.label_text + ' &nbsp;' +
+                '<span id="unit-price-currency">'+ data.currency + '</span>' +
                 '<span id="unit-price-calc">' + display_price +
               '</span></div>';
           }
@@ -144,41 +160,59 @@ var unitPricing = {
 
   },
 
-  getUnitPrice: function(product_id, is_variant) {
-    let url = '<%= ENV["HOST"] %>' + '/unit_prices/' + product_id;
+  getUnitPrice: function(product_id, is_variant, $) {
+    // let url = '<%= ENV["HOST"] %>' + '/unit_prices/' + product_id;
+    console.log(is_variant);
+    console.log(product_id);
+    let shop = Shopify.shop;
+    let url = host + '/unit_prices/' + product_id;
     if (is_variant === true) {
-      url = '<%= ENV["HOST"] %>' + '/unit_prices_variants/' + product_id;
+      url = host + '/unit_prices_variants/' + product_id;
     }
     $.ajax({
       url: url,
       method: 'get',
+      data: new URLSearchParams({'shop_url': shop}).toString(),
       success: function(data) {
         var unit_price = data.unit_price,
-            variant_label_text = '<%= @shop.preference.variant_label_text %>',
+            variant_label_text = data.variant_label_text,
             units = data.units;
+
+        var label_text = data.label_text;
+        var currency = data.currency;
+        var delimiter = data.delimiter;
 
         var pricing_area = unitPricing.getProductPageDropzone();
         var is_loaded = unitPricing.isUnitPriceDiv();
 
+        console.log(url);
+        console.log('The domain is: ' + shop + '/products/' + product_id);
+        console.log('getUnitPrice: ' + unit_price);
+
         if (unit_price > 0) {
           if (pricing_area) {
-            var delimiter = '<%= @shop.preference.delimiter %>',
-                display_price = unit_price.toString().replace('.', delimiter);
+            // var delimiter = '<%= @shop.preference.delimiter %>',
+            var display_price = unit_price.toString().replace('.', delimiter);
             if (!is_loaded) {
-              if ('<%= @shop.preference.insert_order %>' == 'before') {
-                $(pricing_area).before('<div id="unit-price-div"><span id="unit-price-label"><%= @shop.preference.label_text %> <span id="unit-price-currency"><%= @shop.preference.currency %></span><span id="unit-price-calc">'+display_price+'</span></div>');
+              if (data.insert_order == 'before') {
+                $(pricing_area).before('<div id="unit-price-div"><span id="unit-price-label">'+label_text+' <span id="unit-price-currency">'+currency+'</span><span id="unit-price-calc">'+display_price+' </span></div>');
               }
               else {
-                $(pricing_area).after('<div id="unit-price-div"><span id="unit-price-label"><%= @shop.preference.label_text %> <span id="unit-price-currency"><%= @shop.preference.currency %></span><span id="unit-price-calc">'+display_price+'</span></div>');
+                $(pricing_area).after('<div id="unit-price-div"><span id="unit-price-label">'+label_text+' <span id="unit-price-currency">'+currency+'</span><span id="unit-price-calc">'+display_price+' </span></div>');
               }
             } else {
-              $('#unit-price-div').html('<span id="unit-price-label"><%= @shop.preference.label_text %> <span id="unit-price-currency"><%= @shop.preference.currency %></span><span id="unit-price-calc">'+display_price+'</span>');
+              $('#unit-price-div').html('<span id="unit-price-label">'+label_text+' <span id="unit-price-currency">'+currency+'</span><span id="unit-price-calc">'+display_price+' </span>');
             }
           }
           // send admin error alert with this page URL
           else { 
             console.log("Couldn't find pricing dropzone.") 
           }
+        } else {
+            if(is_loaded) {
+                // remove unit pricing if unit price is 0
+                $('#unit-price-div').remove();
+            }
         }
 
         //if (variant_label_text && variant_label_text.length > 0 && units && !is_loaded) {

@@ -3,6 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
 
+gem 'rake'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
 # Use sqlite3 as the database for Active Record
@@ -85,7 +87,17 @@ gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'json'
+gem 'pg', '~> 0.20'
 
-
+group :development, :test do
+  gem 'spring'
+  gem 'foreman'
+  gem 'better_errors'
+  gem 'pry'
+  gem 'awesome_print'
+  gem "binding_of_caller"
+  gem 'shopify-cli' #removed '1.10.0'
+end
 
 

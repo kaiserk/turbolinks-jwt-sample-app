@@ -28,7 +28,7 @@ class MetafieldService
     def get_metafields(object)
       shop = object.shop
 
-      resp = Curl.get("https://#{shop.domain}/admin/#{shopify_resource(object)}/#{object.shopify_id}/metafields.json?access_token=#{shop.token}") do |http|
+      resp = Curl.get("https://#{shop.shopify_domain}/admin/#{shopify_resource(object)}/#{object.shopify_id}/metafields.json?access_token=#{shop.shopify_token}") do |http|
         http.headers['Content-Type'] = 'application/json'
       end
 
@@ -60,7 +60,7 @@ class MetafieldService
       return nil unless object.shopify_metafield_id?
       shop = object.shop
 
-      resp = Curl.delete("https://#{shop.domain}/admin/#{shopify_resource(object)}/#{object.shopify_id}/metafields/#{object.shopify_metafield_id}.json?access_token=#{shop.token}") do |http|
+      resp = Curl.delete("https://#{shop.shopify_domain}/admin/#{shopify_resource(object)}/#{object.shopify_id}/metafields/#{object.shopify_metafield_id}.json?access_token=#{shop.shopify_token}") do |http|
         http.headers['Content-Type'] = 'application/json'
       end
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-class Shop < ActiveRecord::Base
+# class Shop < ActiveRecord::Base
+class Shop < ApplicationRecord
   include ShopifyApp::ShopSessionStorageWithScopes
 
   def uninstall
@@ -29,8 +30,9 @@ class Shop < ActiveRecord::Base
   # end
 
   def self.retrieve(id)
+    puts 'Shopify shop id: ' + id.to_s
     if shop = self.where(id: id).first
-      ShopifyAPI::Session.new(shop.shopify_domain, shop.shopify_token)
+      ShopifyAPI::Session.new(domain: shop.shopify_domain, token: shop.shopify_token, api_version: ShopifyApp.configuration.api_version)
     end
   end
 
@@ -81,7 +83,7 @@ class Shop < ActiveRecord::Base
   end
 
   def sessionize
-    session = ShopifyAPI::Session.new(self.shopify_domain, self.token)
+    session = ShopifyAPI::Session.new(domain: self.shopify_domain, token: self.token, api_version: ShopifyApp.configuration.api_version)
     ShopifyAPI::Base.activate_session(session)
   end
 

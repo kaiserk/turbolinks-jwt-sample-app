@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  # root  'dashboard#index' # old way
-  root to: 'splash_page#index'
-  get '/home', to: 'home#index', as: :home
-  get '/products', to: 'products#index'
+  root  'dashboard#index' # old way
+  # root to: 'splash_page#index'
+  # get '/home', to: 'home#index', as: :home
+  # get '/products', to: 'products#index'
   get '/dashboard', to: 'dashboard#index'
   get '/show-collection', to: "dashboard#show_collection", as: 'show_collection'
   get '/manual-uninstall', to: "dashboard#manual_uninstall", as: 'manual_uninstall'
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   # webhooks
   # match 'uninstall', to: 'webhook#uninstall', via: [:get, :post]
-  match 'product_update_price', to: 'webhook#product_update', via: [:get, :post]
+  match 'webhooks/product_update', to: 'webhook#product_update', via: [:get, :post]
 
   #GDPR webhooks
   match 'customers/data_erase', to: 'webhook#customers_redact', via: [:post]

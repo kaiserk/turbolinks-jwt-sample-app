@@ -2,10 +2,12 @@ class DashboardController < AuthenticatedController
   include SearchesHelper
   
   before_action :set_shop
-  # before_action :check_billing
+  # before_action :check_billing # may need it back @kaiserk
 
   def index
   	puts "DashboardController index start"
+    @shop_origin = current_shopify_domain
+
     # Get all Products with unit set
 
     # current_products = Product.all()
@@ -15,7 +17,8 @@ class DashboardController < AuthenticatedController
     @shopify_products = []
     #Generate array with products' shopify_id
     current_products.each do |current|
-      currend_prod_ids.push(current.id)
+      currend_prod_ids.push(current.shopify_id)
+      # currend_prod_ids.push(current.id)
     end
     #get all products from shopify
     temp_shopify_products = ShopifyAPI::Product.find(:all)

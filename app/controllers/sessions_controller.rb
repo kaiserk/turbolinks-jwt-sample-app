@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
     if response = request.env['omniauth.auth']
       shop_name = response.uid
       token = response['credentials']['token']
-      sess = ShopifyAPI::Session.new(shop_name, token)
+      sess = ShopifyAPI::Session.new(domain: shop_name, token: token, api_version: ShopifyApp.configuration.api_version)
 
       # point explicitly to postgres storage vs relying on indicated local storage
       session[:shopify] = Shop.store(sess)

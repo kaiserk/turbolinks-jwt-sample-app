@@ -19,16 +19,21 @@
     <h2>3. Plant a snippet of code</h2>
     <p>
       <span><strong>3.1.</strong> On the right side of the screen, find this line of code:</span><br>
-      <code>{% include 'product-price', variant: product %}</code>
+      <br>
+      <code>{% include 'product-price-listing', product: product, show_vendor: show_vendor %}</code><br>
+      <br>
+      In old stores the line may look like: <code>{% include 'product-price', variant: product %}</code><br>
     </p>
-    <%= image_tag "step3_1.png" %>
+    <%#= image_tag "step3_1.png" %>
     <br>
     <p>
       <span><strong>3.2.</strong> Then, directly after that line of code, paste this:</span><br>
-      <code><%= '<div class="insert-unit-pricing" data-product="{{ product.id }}"></div>' %></code><br>
+      <br>
+      <code><%= '<div class="insert-unit-pricing" data-product="{{ product.id }}"></div>' %></code> (Old stores!)<br>
+      <br>
       <span><strong>Note:</strong> Where you will put this line of code, there will be shown the product's unit price.</span>
     </p>
-    <%= image_tag "step3_2.png" %>
+    <%#= image_tag "step3_2.png" %>
     <br>
   </div>
 </div>

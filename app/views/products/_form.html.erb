@@ -4,7 +4,7 @@
 <td>
 <!--  (@current_shopify_session.domain if @current_shopify_session)-->
   <%= link_to product.title[0..35], "https://#{@current_shopify_session.domain}/admin/products/#{product.id}", target: "_blank" %>
-  <%#= link_to product.title[0..35], "https://#{@shop_session.url}/admin/products/#{product.id}", target: "_blank" %>
+  <%#= link_to product.title[0..35], "https://#{@shop_session.url}/admin/products/#{product.shopify_id}", target: "_blank" %>
 
 </td>
 
@@ -43,6 +43,7 @@
         <%= link_to cta, product_path(product), class: 'btn btn-success' %>
       <% else %>
         <%= link_to cta, products_path, class: 'btn btn-success' %>
+        <%#= f.button :submit, cta, class: 'save btn btn-success' %>
       <% end %>
     <% else %>
       <%= f.button :submit, cta, class: 'save btn btn-success' %>
