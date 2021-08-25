@@ -25,13 +25,13 @@
     <% @shopify_products.each do |result| %>
       <tr><%= render partial: "products/form", locals: {product: result} %></tr>
     <% end %>
-    <tr>
-      <td class="save-all-container" colspan="3" align="right"><div class="save btn btn-success save-all">Save All</div></td>
-    </tr>
+<!--    <tr>-->
+<!--      <td class="save-all-container" colspan="3" align="right"><div class="save btn btn-success save-all">Save All</div></td>-->
+<!--    </tr>-->
   </tbody>
   </table>
 
-  <%= form_tag(:bulk, id: "saveAllForm") %>
+  <%#= form_tag(:bulk, id: "saveAllForm") %>
 </div>
 <% end %>
 

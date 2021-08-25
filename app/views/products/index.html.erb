@@ -19,13 +19,17 @@
     <table class="table">
       <thead>
       <td><b>Product</b></td>
-      <td data-toggle="tooltip" data-placement="bottom" title="<%= pricing_tooltip %>"><b>Unit Quantity <%= fa_icon "question" %></b></td>
+<!--      <td data-toggle="tooltip" data-placement="right" title="<%#= pricing_tooltip %>"><b>Unit Quantity <%#= fa_icon "question" %></b></td>-->
+      <td><b>Unit Quantity</b></td>
       </thead>
       <tbody>
       <% @products.each_with_index do |product, idx| %>
         <tr>
           <td style='vertical-align:middle'>
-            <%#= image_tag product.image_url, class: 'img img-thumbnail', onerror: "this.onerror=null;this.src='https://place-hold.it/75x75/white/black.png&text=n/a';" %>
+            <% if product.image_url %>
+              <%= image_tag product.image_url, class: 'img img-thumbnail', onerror: "this.onerror=null;this.src='https://place-hold.it/75x75/white/black.png&text=n/a';" %>
+            <% end %>
+
             <%= link_to product.title, "https://#{@current_shopify_session.domain}/admin/products/#{product.shopify_id}", target: "_blank" %>
           </td>
           <td>
