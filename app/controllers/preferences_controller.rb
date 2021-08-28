@@ -1,5 +1,5 @@
 class PreferencesController < AuthenticatedController
-  protect_from_forgery except: :edit
+  # protect_from_forgery except: :edit
   before_action :set_shop
   before_action :set_preference, only: [:show, :edit, :update, :destroy]
 

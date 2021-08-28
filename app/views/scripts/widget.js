@@ -1,6 +1,6 @@
 // require('dotenv').config();
 
-var host = "https://512afbc47b5b.ngrok.io";
+var host = '<%= ENV["HOST"] %>';
 
 var loadScript = function(url, callback){
 
