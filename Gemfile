@@ -7,8 +7,6 @@ gem 'rake'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -91,7 +89,20 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'json'
 gem 'pg', '~> 0.20'
 
-group :development, :test do
+group :development do
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3', '~> 1.4'
+  gem 'spring'
+  gem 'foreman'
+  gem 'better_errors'
+  gem 'pry'
+  gem 'awesome_print'
+  gem "binding_of_caller"
+  gem 'shopify-cli' #removed '1.10.0'
+end
+
+group :test do
+  # Use sqlite3 as the database for Active Record
   gem 'spring'
   gem 'foreman'
   gem 'better_errors'
