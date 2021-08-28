@@ -1,8 +1,8 @@
 class CreateShops < ActiveRecord::Migration[6.0]
   def self.up
     create_table :shops  do |t|
-      t.string :shopify_domain, null: false
-      t.string :shopify_token, null: false
+      t.string :domain, null: false
+      t.string :token, null: false
       t.timestamps
     end
 
