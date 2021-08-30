@@ -275,6 +275,7 @@ GEM
     rdoc (4.3.0)
     redirect_safely (1.0.0)
       activemodel
+    redis (4.4.0)
     regexp_parser (2.1.1)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -403,6 +404,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 6.0.2, >= 6.0.2.2)
   rake
+  redis (~> 4.0)
   sass-rails
   sdoc (~> 0.4.0)
   selenium-webdriver
