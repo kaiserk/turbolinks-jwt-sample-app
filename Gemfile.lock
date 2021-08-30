@@ -403,7 +403,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 6.0.2, >= 6.0.2.2)
   rake
-  sass-rails (>= 6)
+  sass-rails
   sdoc (~> 0.4.0)
   selenium-webdriver
   shopify-cli
@@ -428,4 +428,4 @@ RUBY VERSION
    ruby 2.7.1p83
 
 BUNDLED WITH
-   2.1.4
+   2.2.24
