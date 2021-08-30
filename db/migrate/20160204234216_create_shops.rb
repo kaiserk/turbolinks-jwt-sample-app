@@ -6,7 +6,7 @@ class CreateShops < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :shops, :shopify_domain, unique: true
+    add_index :shops, :domain, unique: true
   end
 
   def self.down
