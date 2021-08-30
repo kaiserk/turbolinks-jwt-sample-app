@@ -1,6 +1,6 @@
 // require('dotenv').config();
 
-var host = '<%= ENV["HOST"] %>';
+var host = 'https://unit-pricer.herokuapp.com';
 
 var loadScript = function(url, callback){
 
