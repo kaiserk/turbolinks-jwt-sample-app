@@ -22,6 +22,13 @@ module TurbolinksJwtTest2
     config.autoload_paths << Rails.root.join('lib') # adds Lib folder to autoloaded files
     config.autoload_paths += %W(#{config.root}/app/services)
 
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
+
     config.action_dispatch.default_headers = {
       'X-Frame-Options' => 'none',
       'X-XSS-Protection' => 'none',
@@ -31,14 +38,14 @@ module TurbolinksJwtTest2
       'Referrer-Policy' => 'none'
     }
 
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :options]
-      end
-    end
+    # config.middleware.insert_before 0, "Rack::Cors" do
+    #   allow do
+    #     origins '*'
+    #     resource '*', :headers => :any, :methods => [:get, :post, :options]
+    #   end
+    # end
 
-    # config.active_record.raise_in_transactional_callbacks = true
+    config.active_record.raise_in_transactional_callbacks = true
 
   end
 end
