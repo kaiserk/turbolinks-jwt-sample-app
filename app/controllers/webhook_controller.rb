@@ -1,4 +1,5 @@
 class WebhookController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :verify_webhook, only: [:uninstall, :product_update]
   before_action :set_shop, only: [:uninstall]
 
