@@ -45,7 +45,9 @@ module TurbolinksJwtTest2
     #   end
     # end
 
-    config.active_record.raise_in_transactional_callbacks = true
+    # Not needed from Rails 6
+    # https://stackoverflow.com/questions/37464966/what-causes-deprecation-warning-activerecordbase-raise-in-transactional-callb
+    # config.active_record.raise_in_transactional_callbacks = true
 
   end
 end
