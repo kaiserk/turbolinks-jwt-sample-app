@@ -1,6 +1,7 @@
 class UnitPricesController < ApplicationController
   # include ShopifyApp::Authenticated
-  # skip_before_action :verify_authenticity_token
+  # # needed for webhooks
+  skip_before_action :verify_authenticity_token
   # before_action :set_shop, only: [:show, :show_variant, :update]
   before_action :set_shopify_product
   before_action :set_shopify_variant
