@@ -5,7 +5,7 @@ class VariantsController < AuthenticatedController
   def update
     puts "VariantsC update"
     respond_to do |format|
-      if @variant.update_attributes(variant_params)
+      if @variant.update(variant_params)
         flash[:notice] = 'Variant units updated successfully.'
         format.json { respond_with_bip(@variant) }
         format.html {redirect_to dashboard_path}
