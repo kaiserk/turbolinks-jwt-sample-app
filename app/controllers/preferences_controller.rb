@@ -48,6 +48,7 @@ class PreferencesController < AuthenticatedController
     puts "PreferencesC update"
     coerce_currency
     set_label_text
+    set_collection_label_text
 
     respond_to do |format|
       if @preference.save
@@ -90,8 +91,13 @@ class PreferencesController < AuthenticatedController
       @preference.label_text = label_text
     end
 
+    def set_collection_label_text
+      collection_label_text = preference_params['collection_label_text']
+      @preference.collection_label_text = collection_label_text
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def preference_params
-      params.require(:preference).permit(:currency, :label_text, :shop_id)
+      params.require(:preference).permit(:currency, :label_text, :shop_id, :collection_label_text)
     end
 end
