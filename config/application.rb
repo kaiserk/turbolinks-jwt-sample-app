@@ -32,7 +32,7 @@ module TurbolinksJwtTest2
     config.action_dispatch.default_headers = {
       'X-Frame-Options' => 'none',
       'X-XSS-Protection' => 'none',
-      # 'X-Content-Type-Options' => 'nosniff',
+      'X-Content-Type-Options' => 'nosniff',
       'X-Download-Options' => 'noopen',
       'X-Permitted-Cross-Domain-Policies' => 'none',
       'Referrer-Policy' => 'none'
