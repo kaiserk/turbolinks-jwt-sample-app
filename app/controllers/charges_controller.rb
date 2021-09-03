@@ -48,7 +48,7 @@ class ChargesController < AuthenticatedController
   end
 
   def init_webhooks
-    ShopifyAPI::Base.activate_session(shop_session)
+    # ShopifyAPI::Base.activate_session(shop_session)
     # CreateWebhooksJob.perform_async(@shop_session)
     # CreateScriptTagsJob.perform_async(@shop_session)
     # CreateThemeSnippetJob.perform_async(@shop)
@@ -56,8 +56,7 @@ class ChargesController < AuthenticatedController
 
   def test_charge?
     shop = ShopifyAPI::Shop.current
-    plan = shop.plan_name.to_s
-    return true if shop.plan_name == "affiliate" || "partner_test"
+    return true if shop.plan_name == "affiliate" || shop.plan_name == "partner_test"
     false
   end
 
