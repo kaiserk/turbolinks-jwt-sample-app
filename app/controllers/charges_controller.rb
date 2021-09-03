@@ -21,6 +21,10 @@ class ChargesController < AuthenticatedController
     @charge_id = params[:charge_id]
     charge = ShopifyAPI::RecurringApplicationCharge.find(@charge_id)
 
+    c_status = charge.status.to_s
+
+    puts '*** Charge status ===' + c_status
+
     if charge.status == "accepted"
       save_charge
       charge.activate
