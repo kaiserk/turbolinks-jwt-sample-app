@@ -2,7 +2,7 @@ class DashboardController < AuthenticatedController
   include SearchesHelper
   
   before_action :set_shop
-  # before_action :check_billing # may need it back @kaiserk
+  before_action :check_billing
 
   def index
   	puts "DashboardController index start"

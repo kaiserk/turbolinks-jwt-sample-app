@@ -1,6 +1,6 @@
 class ChargesController < AuthenticatedController
   before_action :set_shop
-  before_action :init_webhooks, only: [:new]
+  # before_action :init_webhooks, only: [:new]
   before_action :set_terms, only: [:new]
   before_action :get_extra_details, only: [:new]
 
@@ -24,8 +24,8 @@ class ChargesController < AuthenticatedController
     if charge.status == "accepted"
       save_charge
       charge.activate
-      #redirect_to thanks_path
-      redirect_to "https://#{@shop.domain}/admin/apps/" + ENV['APP_NAME'] + "/thanks"
+      redirect_to thanks_path
+      # redirect_to "https://#{@shop.shopify_domain}/admin/apps/" + ENV['APP_NAME'] + "/thanks"
     else
       redirect_to root_path
     end
@@ -33,7 +33,8 @@ class ChargesController < AuthenticatedController
 
   def thanks
     puts "ChargesC new thanks"
-    SlackBot.ping "Unit Pricing charge activated: #{@shop.domain}"
+    # disable Slack notify until Slack account is created
+    # SlackBot.ping "Unit Pricing charge activated: #{@shop.shopify_domain}"
   end
 
   private
@@ -48,14 +49,15 @@ class ChargesController < AuthenticatedController
 
   def init_webhooks
     ShopifyAPI::Base.activate_session(shop_session)
-    CreateWebhooksJob.perform_async(@shop_session)
-    CreateScriptTagsJob.perform_async(@shop_session)
-    CreateThemeSnippetJob.perform_async(@shop)
+    # CreateWebhooksJob.perform_async(@shop_session)
+    # CreateScriptTagsJob.perform_async(@shop_session)
+    # CreateThemeSnippetJob.perform_async(@shop)
   end
 
   def test_charge?
     shop = ShopifyAPI::Shop.current
-    return true if shop.plan_name == "affiliate"
+    plan = shop.plan_name.to_s
+    return true if shop.plan_name == "affiliate" || "partner_test"
     false
   end
 
