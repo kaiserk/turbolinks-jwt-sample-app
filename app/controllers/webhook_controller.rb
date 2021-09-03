@@ -28,8 +28,8 @@ class WebhookController < ApplicationController
   end
 
   def shop_redact
-    if params['shop_domain'] && Shop.find_by(domain: params['shop_domain'])
-      shop = Shop.find_by(domain: params['shop_domain'])
+    if params['shop_domain'] && Shop.find_by(shopify_domain: params['shop_domain'])
+      shop = Shop.find_by(shopify_domain: params['shop_domain'])
       puts ""
       product_ids = Product.where(shop_id: shop.id).ids
       variant_ids = Variant.where(product_id: product_ids).ids
@@ -49,7 +49,7 @@ class WebhookController < ApplicationController
   private
 
     def set_shop
-      @shop = Shop.find_by(domain: params['myshopify_domain'])
+      @shop = Shop.find_by(shopify_domain: params['myshopify_domain'])
     end
 
     def verify_webhook
