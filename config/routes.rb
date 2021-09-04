@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: 'splash_page#index'
   # get '/home', to: 'home#index', as: :home
   # get '/products', to: 'products#index'
-  get '/dashboard', to: 'dashboard#index', as :home
+  get '/dashboard', to: 'dashboard#index', as: :home
   get '/show-collection', to: "dashboard#show_collection", as: 'show_collection'
   get '/manual-uninstall', to: "dashboard#manual_uninstall", as: 'manual_uninstall'
 
