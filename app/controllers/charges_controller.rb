@@ -1,6 +1,6 @@
 class ChargesController < AuthenticatedController
   before_action :set_shop
-  # before_action :init_webhooks, only: [:new]
+  before_action :init_webhooks, only: [:new]
   before_action :set_terms, only: [:new]
   before_action :get_extra_details, only: [:new]
 
@@ -53,7 +53,7 @@ class ChargesController < AuthenticatedController
   end
 
   def init_webhooks
-    # ShopifyAPI::Base.activate_session(shop_session)
+    ShopifyAPI::Base.activate_session(shop_session)
     # CreateWebhooksJob.perform_async(@shop_session)
     # CreateScriptTagsJob.perform_async(@shop_session)
     # CreateThemeSnippetJob.perform_async(@shop)
