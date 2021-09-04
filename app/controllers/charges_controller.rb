@@ -13,6 +13,7 @@ class ChargesController < AuthenticatedController
       trial_days: @trial_days,
       return_url: create_url
       )
+    puts '*** Confirmation URL: ' + charge.confirmation_url.to_s
     @url = charge.confirmation_url
   end
 

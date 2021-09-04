@@ -1,6 +1,6 @@
 // require('dotenv').config();
 
-var host = 'https://unit-pricer.herokuapp.com';
+var host = "https://512afbc47b5b.ngrok.io";
 
 var loadScript = function(url, callback){
 
