@@ -70,7 +70,7 @@ gem 'sweetalert-rails', '~> 1.1', '>= 1.1.3' # added on error
 
 # additional experimental extras
 gem 'twitter-bootstrap-rails'
-gem 'devise'
+# gem 'devise' # disable until needed again
 gem 'gravatarify'
 gem 'bootstrap-sass'
 gem 'figaro'
