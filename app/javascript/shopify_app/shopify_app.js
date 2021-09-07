@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         shouldRedirect = validLoadPath;
         break;
       case false:
-        shouldRedirect = validLoadPath && data.loadPath !== '/home'; // Replace with the app's home_path
+        shouldRedirect = validLoadPath && data.loadPath !== '/dashboard'; // Replace with the app's home_path
         break;
     }
     if (shouldRedirect) Turbolinks.visit(data.loadPath);

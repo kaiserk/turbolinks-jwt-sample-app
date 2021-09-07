@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  root  'dashboard#index' # old way
-  # root to: 'splash_page#index'
+  # root  'dashboard#index' # old way
+  root to: 'splash_page#index'
   # get '/home', to: 'home#index', as: :home
   # get '/products', to: 'products#index'
   get '/dashboard', to: 'dashboard#index'
