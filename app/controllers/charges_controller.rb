@@ -26,7 +26,7 @@ class ChargesController < AuthenticatedController
 
     puts '*** Charge status ===' + c_status
 
-    if charge.status == "accepted"
+    if charge.status == "accepted" || charge.status == "active"
       save_charge
       charge.activate
       redirect_to thanks_path
