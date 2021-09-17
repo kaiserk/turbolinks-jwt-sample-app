@@ -9,7 +9,7 @@ ShopifyApp.configure do |config|
   config.reauth_on_access_scope_changes = true
   config.embedded_app = true
   config.after_authenticate_job = false
-  config.api_version = "2020-04"
+  config.api_version = "2021-07"
   config.shop_session_repository = 'Shop'
   config.allow_jwt_authentication = true
   config.webhooks = [
