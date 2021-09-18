@@ -10,6 +10,8 @@ import { authenticatedFetch } from '@shopify/app-bridge-utils';
 import enTranslations from '@shopify/polaris/locales/en.json';
 import React from 'react';
 
+import TestData from './TestData'
+
 export default function App() {
   const client = new ApolloClient({
     link: new HttpLink({
