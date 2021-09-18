@@ -76,6 +76,10 @@ GEM
     autoprefixer-rails (10.2.5.1)
       execjs (> 0)
     awesome_print (1.9.2)
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     best_in_place (3.1.1)
       actionpack (>= 3.2)
       railties (>= 3.2)
@@ -114,6 +118,7 @@ GEM
     coffee-script-source (1.12.2)
     commonjs (0.2.7)
     concurrent-ruby (1.1.9)
+    connection_pool (2.2.5)
     crass (1.0.6)
     curb (0.9.11)
     daemons (1.4.0)
@@ -273,6 +278,12 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rdoc (4.3.0)
+    react-rails (2.6.1)
+      babel-transpiler (>= 0.7.0)
+      connection_pool
+      execjs
+      railties (>= 3.2)
+      tilt
     redirect_safely (1.0.0)
       activemodel
     redis (4.4.0)
@@ -384,6 +395,7 @@ DEPENDENCIES
   figaro
   font-awesome-rails
   foreman
+  graphql
   gravatarify
   jbuilder (~> 2.7)
   jquery-rails
@@ -399,6 +411,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 6.0.2, >= 6.0.2.2)
   rake
+  react-rails
   redis (~> 4.0)
   sass-rails
   sdoc (~> 0.4.0)
