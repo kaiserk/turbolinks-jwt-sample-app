@@ -27,7 +27,7 @@ export default function App() {
         <ApolloProvider client={client}>
           <Page>
             <EmptyState>
-              <TestData/>    # Add the TestData component here
+              <TestData/>
             </EmptyState>
           </Page>
         </ApolloProvider>
