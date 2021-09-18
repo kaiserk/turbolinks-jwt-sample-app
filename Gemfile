@@ -96,6 +96,8 @@ gem 'pg', '~> 0.20'
 
 group :development do
   # Use sqlite3 as the database for Active Record
+  gem 'graphiql-rails'
+  gem 'faker'
   gem 'sqlite3', '~> 1.4'
   gem 'spring'
   gem 'foreman'
