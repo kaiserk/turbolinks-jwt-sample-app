@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  if Rails.env.development?
+    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
+  end
+  post "/graphql", to: "graphql#execute"
   # root  'dashboard#index' # old way
   root to: 'splash_page#index'
   # get '/home', to: 'home#index', as: :home

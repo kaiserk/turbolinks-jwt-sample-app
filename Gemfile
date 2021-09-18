@@ -118,3 +118,5 @@ group :test do
 end
 
 
+
+gem 'graphiql-rails', group: :development
