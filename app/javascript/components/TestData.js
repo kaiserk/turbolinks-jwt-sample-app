@@ -4,14 +4,22 @@ import React from 'react';
 
 const TEST_QUERY = gql`query { testField }`;
 
+// const UPDATE_QUERY = gql`
+//     mutation UpdateProduct($id: ID!, $title: String!) {
+//         updateProduct(input: { id: $id, title: $title }) {
+//           product {
+//             title
+//           }
+//           errors
+//         }
+//   }
+// `;
+
 const UPDATE_QUERY = gql`
     mutation UpdateProduct($id: ID!, $title: String!) {
-    updateProduct(input: { id: $id, title: $title }) {
-      product {
-        title
-      }
-      errors
-    }
+        updateProduct(input: { id: $id, title: $title }) {
+          errors
+        }
   }
 `;
 
@@ -29,9 +37,6 @@ export default function TestData() {
         );
     } else {
         return (
-        //     <p>{data.testField}</p>
-        // );
-
             <div>
                 <form
                     onSubmit={e => {
