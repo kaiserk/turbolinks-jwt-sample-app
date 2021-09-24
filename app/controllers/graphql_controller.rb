@@ -3,6 +3,7 @@ class GraphqlController < AuthenticatedController
   # This allows for outside API access while preventing CSRF attacks,
   # but you'll have to authenticate your user separately
   # protect_from_forgery with: :null_session
+  protect_from_forgery with: :null_session, unless: -> { request.local? }
 
   def execute
     variables = prepare_variables(params[:variables])
