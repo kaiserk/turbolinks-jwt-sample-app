@@ -1,31 +1,19 @@
 import { gql, useQuery, useMutation } from '@apollo/client';
-
 import React from 'react';
 
-const TEST_QUERY = gql`query { testField }`;
-
-// const UPDATE_QUERY = gql`
-//     mutation UpdateProduct($id: ID!, $title: String!) {
-//         updateProduct(input: { id: $id, title: $title }) {
-//           product {
-//             title
-//           }
-//           errors
-//         }
-//   }
-// `;
-
-const UPDATE_QUERY = gql`
-    mutation UpdateProduct($id: ID!, $title: String!) {
-        updateProduct(input: { id: $id, title: $title }) {
-          errors
-        }
+const PRODUCTS_QUERY = gql`
+  query GetProducts {
+    products {
+      id
+      title
+    }
   }
 `;
 
 export default function TestData() {
     let input;
-    const [updateProduct, { data, loading, error }] = useMutation(UPDATE_QUERY);
+
+    const { loading, error, data } = useQuery(PRODUCTS_QUERY);
 
     if (loading) {
         return (
@@ -38,20 +26,11 @@ export default function TestData() {
     } else {
         return (
             <div>
-                <form
-                    onSubmit={e => {
-                        e.preventDefault();
-                        updateProduct({ variables: { id: 1, title: input.value } });
-                        input.value = '';
-                    }}
-                >
-                    <input
-                        ref={node => {
-                            input = node;
-                        }}
-                    />
-                    <button type="submit">Update Title</button>
-                </form>
+                {data.products.map(product => (
+                    <div key={product.id}>
+                        <b>{product .title}</b>
+                    </div>
+                ))}
             </div>
         );
     }

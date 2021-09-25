@@ -1,64 +1,10 @@
-// import {
-//   ApolloClient,
-//   ApolloProvider,
-//   HttpLink,
-//   InMemoryCache,
-// } from '@apollo/client';
-// import { AppProvider, EmptyState, Page } from '@shopify/polaris';
-// import { authenticatedFetch } from '@shopify/app-bridge-utils';
-// import enTranslations from '@shopify/polaris/locales/en.json';
-// import React from 'react';
-// import TestData from "./TestData";
-// export default function App() {
-//
-//   const client = new ApolloClient({
-//
-//     link: new HttpLink({
-//
-//       credentials: 'same-origin',
-//
-//       fetch: authenticatedFetch(window.app), // created in shopify_app.js
-//
-//       uri: '/graphql'
-//
-//     }),
-//
-//     cache: new InMemoryCache()
-//
-//   });
-//
-//   return (
-//
-//       <AppProvider i18n={enTranslations}>
-//
-//         <ApolloProvider client={client}>
-//
-//           <Page>
-//
-//             <EmptyState>
-//
-//               <TestData/>
-//
-//             </EmptyState>
-//
-//           </Page>
-//
-//         </ApolloProvider>
-//
-//       </AppProvider>
-//
-//   );
-// }
-
-
-// App.js - Input editable UI
-
 import {
     ApolloClient,
     ApolloProvider,
     HttpLink,
     InMemoryCache,
 } from '@apollo/client';
+
 import {AppProvider, EmptyState, Page} from '@shopify/polaris';
 import {authenticatedFetch} from '@shopify/app-bridge-utils';
 import enTranslations from '@shopify/polaris/locales/en.json';
@@ -79,9 +25,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-    // State for the input
-    // const [task, setTask] = useState("");
-
     /*
       1. create a reference using use reference and add the ref={inputRef} to input element
       2. pass this reference to the Editable component, use different name than ref, I used `childRef`. Its basically a normal prop carrying the input element reference.

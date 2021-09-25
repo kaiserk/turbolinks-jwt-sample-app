@@ -1,3 +1,16 @@
+class Mutations::UpdateProductMutation < Mutations::BaseMutation
+  argument :id, ID, required: true
+  argument :title, String, required: true
+
+  field :errors, [String], null: false
+
+  def resolve(id:, **attributes)
+    Product.find(id).tap do |product|
+      product.update!(attributes)
+    end
+  end
+end
+
 # class Mutations::UpdateProductMutation < Mutations::BaseMutation
 #   null true
 #
@@ -28,27 +41,5 @@
 #     end
 #     rescue ActiveRecord::RecordNotFound
 #       return { success: false, product: nil, errors: ['record-not-found'] }
-#   end
-# end
-
-# module Mutations
-#   module Products
-#     class UpdateProductMutation < ::Mutations::BaseMutation
-class Mutations::UpdateProductMutation < Mutations::BaseMutation
-    argument :id, ID, required: true
-    argument :title, String, required: true
-
-    # field :product, Types::ProductType, null: true
-    # field :title, Types::ProductType, null: true
-    field :errors, [String], null: false
-    # type Types::ProductType
-
-    def resolve(id:, **attributes)
-      Product.find(id).tap do |product|
-        product.update!(attributes)
-      end
-    end
-end
-#     end
 #   end
 # end
