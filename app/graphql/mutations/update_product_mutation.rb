@@ -38,7 +38,7 @@ class Mutations::UpdateProductMutation < Mutations::BaseMutation
     argument :id, ID, required: true
     argument :title, String, required: true
 
-    field :product, Types::ProductType, null: true
+    # field :product, Types::ProductType, null: true
     # field :title, Types::ProductType, null: true
     field :errors, [String], null: false
     # type Types::ProductType
