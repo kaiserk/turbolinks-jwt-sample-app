@@ -1,5 +1,7 @@
 import { gql, useQuery, useMutation } from '@apollo/client';
-import React from 'react';
+import React, {useRef, useState} from 'react';
+import Editable from "./Editable";
+
 
 const PRODUCTS_QUERY = gql`
   query GetProducts {
@@ -15,6 +17,9 @@ export default function TestData() {
 
     const { loading, error, data } = useQuery(PRODUCTS_QUERY);
 
+    const inputRef = useRef();
+    const [task, setTask] = useState("");
+
     if (loading) {
         return (
             <div>Loading</div>
@@ -27,9 +32,21 @@ export default function TestData() {
         return (
             <div>
                 {data.products.map(product => (
-                    <div key={product.id}>
-                        <b>{product .title}</b>
-                    </div>
+                    <Editable
+                        text={task}
+                        placeholder={product.title}
+                        childRef={inputRef}
+                        type="input"
+                    >
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            name="task"
+                            placeholder={product.title}
+                            value={task}
+                            onChange={e => setTask(e.target.value)}
+                        />
+                    </Editable>
                 ))}
             </div>
         );
