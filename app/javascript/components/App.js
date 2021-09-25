@@ -1,55 +1,124 @@
+// import {
+//   ApolloClient,
+//   ApolloProvider,
+//   HttpLink,
+//   InMemoryCache,
+// } from '@apollo/client';
+// import { AppProvider, EmptyState, Page } from '@shopify/polaris';
+// import { authenticatedFetch } from '@shopify/app-bridge-utils';
+// import enTranslations from '@shopify/polaris/locales/en.json';
+// import React from 'react';
+// import TestData from "./TestData";
+// export default function App() {
+//
+//   const client = new ApolloClient({
+//
+//     link: new HttpLink({
+//
+//       credentials: 'same-origin',
+//
+//       fetch: authenticatedFetch(window.app), // created in shopify_app.js
+//
+//       uri: '/graphql'
+//
+//     }),
+//
+//     cache: new InMemoryCache()
+//
+//   });
+//
+//   return (
+//
+//       <AppProvider i18n={enTranslations}>
+//
+//         <ApolloProvider client={client}>
+//
+//           <Page>
+//
+//             <EmptyState>
+//
+//               <TestData/>
+//
+//             </EmptyState>
+//
+//           </Page>
+//
+//         </ApolloProvider>
+//
+//       </AppProvider>
+//
+//   );
+// }
+
+
+// App.js - Input editable UI
+
 import {
-
-  ApolloClient,
-
-  ApolloProvider,
-
-  HttpLink,
-
-  InMemoryCache,
+    ApolloClient,
+    ApolloProvider,
+    HttpLink,
+    InMemoryCache,
 } from '@apollo/client';
-import { AppProvider, EmptyState, Page } from '@shopify/polaris';
-import { authenticatedFetch } from '@shopify/app-bridge-utils';
+import {AppProvider, EmptyState, Page} from '@shopify/polaris';
+import {authenticatedFetch} from '@shopify/app-bridge-utils';
 import enTranslations from '@shopify/polaris/locales/en.json';
-import React from 'react';
+import React, {useState, useRef} from 'react';
 import TestData from "./TestData";
-export default function App() {
+import Editable from "./Editable";
 
-  const client = new ApolloClient({
+const client = new ApolloClient({
 
     link: new HttpLink({
-
-      credentials: 'same-origin',
-
-      fetch: authenticatedFetch(window.app), // created in shopify_app.js
-
-      uri: '/graphql'
-
+        credentials: 'same-origin',
+        fetch: authenticatedFetch(window.app), // created in shopify_app.js
+        uri: '/graphql'
     }),
 
     cache: new InMemoryCache()
 
-  });
+});
 
-  return (
+function App() {
+    // State for the input
+    // const [task, setTask] = useState("");
 
-      <AppProvider i18n={enTranslations}>
+    /*
+      1. create a reference using use reference and add the ref={inputRef} to input element
+      2. pass this reference to the Editable component, use different name than ref, I used `childRef`. Its basically a normal prop carrying the input element reference.
+    */
+    const inputRef = useRef();
+    const [task, setTask] = useState("");
 
-        <ApolloProvider client={client}>
+    /*
+      Enclose the input element as the children to the Editable component to make it as inline editable.
+    */
+    return (
 
-          <Page>
-
-            <EmptyState>
-
-              <TestData/>
-
-            </EmptyState>
-
-          </Page>
-
-        </ApolloProvider>
-
-      </AppProvider>
-
-  );
+        <AppProvider i18n={enTranslations}>
+            <ApolloProvider client={client}>
+                <Page>
+                    <EmptyState>
+                        <TestData/>
+                        <Editable
+                            text={task}
+                            placeholder="Write a task name"
+                            childRef={inputRef}
+                            type="input"
+                        >
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                name="task"
+                                placeholder="Write a task name"
+                                value={task}
+                                onChange={e => setTask(e.target.value)}
+                            />
+                        </Editable>
+                    </EmptyState>
+                </Page>
+            </ApolloProvider>
+        </AppProvider>
+    );
 }
+
+export default App;
