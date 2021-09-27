@@ -6685,6 +6685,11 @@ react-dom@^17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
+react-easy-edit@^1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/react-easy-edit/-/react-easy-edit-1.15.0.tgz#ca01c71952ee5b005bdd33ecfc33ef1cbbdea99b"
+  integrity sha512-9RQ19RE0+jxHSY6tPk1vAkYKwBPmzpcESqYS9Zv7zAapQzlUxaJiCAb58eAHf4KbQ3/V5JsWGC/vHcmpwBIfog==
+
 react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"

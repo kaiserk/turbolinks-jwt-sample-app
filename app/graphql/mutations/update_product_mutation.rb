@@ -1,6 +1,6 @@
 class Mutations::UpdateProductMutation < Mutations::BaseMutation
   argument :id, ID, required: true
-  argument :title, String, required: true
+  argument :units, Float, required: true
 
   field :errors, [String], null: false
 
