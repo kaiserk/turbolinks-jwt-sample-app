@@ -5,8 +5,8 @@ import Editable from "./Editable";
 
 
 const PRODUCTS_QUERY = gql`
-  query GetProducts {
-    products {
+  query GetProducts($shopId: Int!) {
+    products(shopId: $shopId) {
       id
       title
       shopifyId
@@ -28,19 +28,21 @@ const UPDATE_QUERY = gql`
 export default function TestData() {
     let input;
 
-    const { loading, error, data } = useQuery(PRODUCTS_QUERY);
+    const { loading, error, data } = useQuery(PRODUCTS_QUERY, {
+        variables: { shopId: 1 }
+    });
 
     const inputRef = useRef();
     const [task, setTask] = useState("");
 
     const [updateProduct, { }] = useMutation(UPDATE_QUERY);
 
-    const save = (value) => {
+    const save = (id, value) => {
         const fValue = parseFloat(value);
-        updateProduct({ variables: { id: 1, units: fValue }});
+        updateProduct({ variables: { id: id, units: fValue }});
     };
 
-    const cancel = () => {alert("Cancelled")};
+    const cancel = () => {};
 
     if (loading) {
         return (
@@ -74,25 +76,25 @@ export default function TestData() {
                             <tbody>
                             <tr>
                                 <td>
-                                    <input readOnly type="text" value={product.title}/>
+                                    <label className="e-float-text e-label-top">{product.title}</label>
                                 </td>
                                 <td>
-                                    <input readOnly type="text" value={product.productPrice}/>
+                                    <label className="e-float-text e-label-top">{product.productPrice}</label>
                                 </td>
                                 <td>
                                     <EasyEdit
                                         type="text"
                                         value={product.units}
-                                        onSave={save}
+                                        onSave={(value) => { save(product.id, value) }}
                                         onCancel={cancel}
-                                        saveButtonLabel="Save Me"
-                                        cancelButtonLabel="Cancel Me"
+                                        saveButtonLabel="Save"
+                                        cancelButtonLabel="Cancel"
                                         attributes={{ name: "awesome-input", id: 1}}
-                                        instructions="Star this repo!"
+                                        // instructions="Instruction!"
                                     />
                                 </td>
                                 <td>
-                                    <input readOnly type="text" value={product.unitPrice}/>
+                                    <label className="e-float-text e-label-top">{product.unitPrice}</label>
                                 </td>
                             </tr>
                             </tbody>

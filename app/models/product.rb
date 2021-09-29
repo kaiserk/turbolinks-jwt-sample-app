@@ -9,15 +9,19 @@ class Product < ApplicationRecord
   after_create :create_or_update_metafield
   #before_destroy :destroy_metafield
 
+  def show
+    Product.all
+  end
+
   def skip_callback(value = false)
     @skip_callback = @skip_callback ? @skip_callback : value
   end
 
   def calculate_unit_price
     self.unit_price = 0
-    return unless self.variants.count.zero?
-
-    return unless self.units?
+    # return unless self.variants.count.zero?
+    #
+    # return unless self.units?
     self.unit_price = (self.product_price / self.units).round(2)
   end
 

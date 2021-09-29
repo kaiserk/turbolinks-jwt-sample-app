@@ -1,9 +1,14 @@
 class GraphqlController < AuthenticatedController
+  before_action :set_shop
   # If accessing from outside this domain, nullify the session
   # This allows for outside API access while preventing CSRF attacks,
   # but you'll have to authenticate your user separately
   # protect_from_forgery with: :null_session
   protect_from_forgery with: :null_session, unless: -> { request.local? }
+
+  def index
+    @shop_origin = current_shopify_domain
+  end
 
   def execute
     variables = prepare_variables(params[:variables])
@@ -24,6 +29,10 @@ class GraphqlController < AuthenticatedController
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)
+    puts variables_param
+    puts @shop.id
+    variables_param['shopId'] = @shop.id
+    puts variables_param
     case variables_param
     when String
       if variables_param.present?
