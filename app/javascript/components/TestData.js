@@ -29,7 +29,7 @@ export default function TestData() {
     let input;
 
     const { loading, error, data } = useQuery(PRODUCTS_QUERY, {
-        variables: { shopId: 1 }
+        variables: { shopId: 0 }
     });
 
     const inputRef = useRef();

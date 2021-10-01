@@ -8,17 +8,23 @@ class GraphqlController < AuthenticatedController
 
   def index
     @shop_origin = current_shopify_domain
+    @shop_id = @shop.id
   end
 
   def execute
     variables = prepare_variables(params[:variables])
+    variables = { shopId: @shop.id }
+    puts '*** variables ***'
+    puts variables
+
     query = params[:query]
+
     operation_name = params[:operationName]
     context = {
       # Query context goes here, for example:
       # current_user: current_user,
     }
-    result = TurbolinksJwtTest2Schema.execute(query, variables: variables, context: context, operation_name: operation_name)
+    result = TurbolinksJwtTest2Schema.execute(query, variables: { shopId: @shop.id }, context: context, operation_name: operation_name)
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?
@@ -29,10 +35,10 @@ class GraphqlController < AuthenticatedController
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)
-    puts variables_param
-    puts @shop.id
-    variables_param['shopId'] = @shop.id
-    puts variables_param
+    # puts variables_param
+    # puts @shop.id
+    # variables_param['shop_id'] = @shop.id
+    # puts variables_param
     case variables_param
     when String
       if variables_param.present?
