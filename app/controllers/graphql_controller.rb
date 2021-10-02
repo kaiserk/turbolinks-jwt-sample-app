@@ -13,7 +13,8 @@ class GraphqlController < AuthenticatedController
 
   def execute
     variables = prepare_variables(params[:variables])
-    variables = { shopId: @shop.id }
+    # variables = { shopId: @shop.id }
+    variables[:shopId] = @shop.id
     puts '*** variables ***'
     puts variables
 
@@ -24,7 +25,7 @@ class GraphqlController < AuthenticatedController
       # Query context goes here, for example:
       # current_user: current_user,
     }
-    result = TurbolinksJwtTest2Schema.execute(query, variables: { shopId: @shop.id }, context: context, operation_name: operation_name)
+    result = TurbolinksJwtTest2Schema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?

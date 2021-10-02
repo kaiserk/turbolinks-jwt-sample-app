@@ -1,17 +1,17 @@
-class Mutations::UpdateProductMutation < Mutations::BaseMutation
-  argument :id, ID, required: true
-  argument :units, Float, required: true
+class Mutations::UpdateVariantMutation < Mutations::BaseMutation
+  argument :id, ID, required: false
+  argument :units, Float, required: false
 
   field :errors, [String], null: false
 
   def resolve(id:, **attributes)
-    Product.find(id).tap do |product|
-      product.update!(attributes)
+    Variant.find(id).tap do |variant|
+      variant.update!(attributes)
     end
   end
 end
 
-# class Mutations::UpdateProductMutation < Mutations::BaseMutation
+# class Mutations::UpdateVariantMutation < Mutations::BaseMutation
 #   null true
 #
 #   argument :title, String, required: true

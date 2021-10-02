@@ -13,13 +13,20 @@ const PRODUCTS_QUERY = gql`
       productPrice
       unitPrice
       units
+      variants {
+        id
+        title
+        variantPrice
+        units
+        unitPrice
+      }
     }
   }
 `;
 
 const UPDATE_QUERY = gql`
-    mutation UpdateProduct($id: ID!, $units: Float!) {
-        updateProduct(input: { id: $id, units: $units }) {
+    mutation UpdateVariant($id: ID, $units: Float) {
+        updateVariant(input: { id: $id, units: $units }) {
           errors
         }
   }
@@ -35,12 +42,40 @@ export default function TestData() {
     const inputRef = useRef();
     const [task, setTask] = useState("");
 
-    const [updateProduct, { }] = useMutation(UPDATE_QUERY);
+    const [updateVariant, { loading2, error2, data2 }] = useMutation(UPDATE_QUERY);
 
     const save = (id, value) => {
         const fValue = parseFloat(value);
-        updateProduct({ variables: { id: id, units: fValue }});
+        console.log(id);
+        updateVariant({ variables: { id: id, units: fValue }});
+
+        if(loading2) {
+            console.log('loading')
+        } else if (error2) {
+            console.log('Mutation error: ' + error)
+        } else {
+            console.log('Nothing show anymore: ' + data);
+        }
     };
+
+    // const getProductPrice = (productId) => {
+    //
+    //     return { data } = useQuery(VARIANTS_QUERY, {
+    //         variables: { productId: productId }
+    //     });
+    //
+    //     // if (loading) {
+    //     //     return (
+    //     //         <div>Loading</div>
+    //     //     );
+    //     // } else if (error) {
+    //     //     return (
+    //     //         <div>Something went wrong! {error}</div>
+    //     //     );
+    //     // } else {
+    //     // return data.variantPrice[0];
+    //     // }
+    // };
 
     const cancel = () => {};
 
@@ -62,6 +97,9 @@ export default function TestData() {
                             Title
                         </th>
                         <th>
+                            Variant Name
+                        </th>
+                        <th>
                             Price
                         </th>
                         <th>
@@ -72,33 +110,38 @@ export default function TestData() {
                         </th>
                     </tr>
                     </thead>
-                {data.products.map(product => (
-                            <tbody>
+                    {data.products.map(product => (
+                    <tbody>
+                        {product.variants.map(variant => (
                             <tr>
                                 <td>
                                     <label className="e-float-text e-label-top">{product.title}</label>
                                 </td>
                                 <td>
-                                    <label className="e-float-text e-label-top">{product.productPrice}</label>
+                                    <label className="e-float-text e-label-top">{variant.title}</label>
+                                </td>
+                                <td>
+                                    <label className="e-float-text e-label-top">{variant.variantPrice}</label>
                                 </td>
                                 <td>
                                     <EasyEdit
-                                        type="text"
-                                        value={product.units}
-                                        onSave={(value) => { save(product.id, value) }}
-                                        onCancel={cancel}
-                                        saveButtonLabel="Save"
-                                        cancelButtonLabel="Cancel"
-                                        attributes={{ name: "awesome-input", id: 1}}
-                                        // instructions="Instruction!"
+                                    type="text"
+                                    value={variant.units}
+                                    onSave={(value) => { save(variant.id, value) }}
+                                    onCancel={cancel}
+                                    saveButtonLabel="Save"
+                                    cancelButtonLabel="Cancel"
+                                    attributes={{ name: "awesome-input", id: 1}}
+                                    // instructions="Instruction!"
                                     />
                                 </td>
                                 <td>
-                                    <label className="e-float-text e-label-top">{product.unitPrice}</label>
+                                    <label className="e-float-text e-label-top">{variant.unitPrice}</label>
                                 </td>
                             </tr>
-                            </tbody>
-                ))}
+                        ))}
+                    </tbody>
+                    ))}
                 </table>
             </div>
         );
