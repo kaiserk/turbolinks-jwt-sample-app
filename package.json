@@ -9,7 +9,7 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.3.0",
     "@shopify/app-bridge-utils": "1.26.0",
-    "@shopify/polaris": "^6.6.0",
+    "@shopify/polaris": "^7.0.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "dotenv": "^10.0.0",
     "graphql": "^15.5.3",

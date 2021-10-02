@@ -2,6 +2,8 @@ import { gql, useQuery, useMutation } from '@apollo/client';
 import React, {useRef, useState} from 'react';
 import EasyEdit from 'react-easy-edit';
 import Editable from "./Editable";
+import {Card, DataTable, Link, Page} from '@shopify/polaris';
+
 
 
 const PRODUCTS_QUERY = gql`
@@ -79,6 +81,7 @@ export default function TestData() {
 
     const cancel = () => {};
 
+
     if (loading) {
         return (
             <div>Loading</div>
@@ -88,62 +91,43 @@ export default function TestData() {
             <div>Something went wrong! {error}</div>
         );
     } else {
+        const rows = [data.products.map(product => (
+            [product.variants.map(variant => (
+                [
+                    product.title,
+                    variant.title,
+                    variant.variantPrice,
+                    <EasyEdit
+                        type="text"
+                        value={variant.units}
+                        onSave={(value) => { save(variant.id, value) }}
+                        onCancel={cancel}
+                        saveButtonLabel="Save"
+                        cancelButtonLabel="Cancel"
+                        attributes={{ name: "awesome-input", id: 1}}
+                        // instructions="Instruction!"
+                    />,
+                    variant.unitPrice
+                ]
+            ))]
+        ))];
+
         return (
-            <div>
-                <table className="">
-                    <thead>
-                    <tr>
-                        <th>
-                            Title
-                        </th>
-                        <th>
-                            Variant Name
-                        </th>
-                        <th>
-                            Price
-                        </th>
-                        <th>
-                            Units
-                        </th>
-                        <th>
-                            Unit Price
-                        </th>
-                    </tr>
-                    </thead>
-                    {data.products.map(product => (
-                    <tbody>
-                        {product.variants.map(variant => (
-                            <tr>
-                                <td>
-                                    <label className="e-float-text e-label-top">{product.title}</label>
-                                </td>
-                                <td>
-                                    <label className="e-float-text e-label-top">{variant.title}</label>
-                                </td>
-                                <td>
-                                    <label className="e-float-text e-label-top">{variant.variantPrice}</label>
-                                </td>
-                                <td>
-                                    <EasyEdit
-                                    type="text"
-                                    value={variant.units}
-                                    onSave={(value) => { save(variant.id, value) }}
-                                    onCancel={cancel}
-                                    saveButtonLabel="Save"
-                                    cancelButtonLabel="Cancel"
-                                    attributes={{ name: "awesome-input", id: 1}}
-                                    // instructions="Instruction!"
-                                    />
-                                </td>
-                                <td>
-                                    <label className="e-float-text e-label-top">{variant.unitPrice}</label>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                    ))}
-                </table>
-            </div>
+            <Page title="Products & Variants">
+                <Card>
+                    <DataTable
+                        columnContentTypes={[
+                        'text',
+                        'text',
+                        'numeric',
+                        'numeric',
+                        'numeric',
+                    ]}
+                    headings={['Product Title', 'Variant Name', 'Price', 'Units', 'Unit Price']}
+                    rows={rows}
+                    />
+                </Card>
+            </Page>
         );
     }
 }
