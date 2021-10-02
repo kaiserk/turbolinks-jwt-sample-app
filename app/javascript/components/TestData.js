@@ -91,9 +91,10 @@ export default function TestData() {
             <div>Something went wrong! {error}</div>
         );
     } else {
-        const rows = [data.products.map(product => (
-            [product.variants.map(variant => (
-                [
+        const rows_array = []
+        const rows = data.products.map(product => (
+            product.variants.map(variant => (
+                rows_array.push([
                     product.title,
                     variant.title,
                     variant.variantPrice,
@@ -108,9 +109,9 @@ export default function TestData() {
                         // instructions="Instruction!"
                     />,
                     variant.unitPrice
-                ]
-            ))]
-        ))];
+                ])
+            ))
+        ));
 
         return (
             <Page title="Products & Variants">
@@ -124,7 +125,7 @@ export default function TestData() {
                         'numeric',
                     ]}
                     headings={['Product Title', 'Variant Name', 'Price', 'Units', 'Unit Price']}
-                    rows={rows}
+                    rows={rows_array}
                     />
                 </Card>
             </Page>

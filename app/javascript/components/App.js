@@ -39,8 +39,8 @@ function App() {
 
         <AppProvider i18n={enTranslations}>
             <ApolloProvider client={client}>
-                <Page>
-                    <EmptyState>
+                {/*<Page>*/}
+                {/*    <EmptyState>*/}
                         <TestData/>
                         {/*<Editable*/}
                         {/*    text={task}*/}
@@ -57,8 +57,8 @@ function App() {
                         {/*        onChange={e => setTask(e.target.value)}*/}
                         {/*    />*/}
                         {/*</Editable>*/}
-                    </EmptyState>
-                </Page>
+                    {/*</EmptyState>*/}
+                {/*</Page>*/}
             </ApolloProvider>
         </AppProvider>
     );
