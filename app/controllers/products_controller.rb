@@ -16,8 +16,11 @@ class ProductsController < AuthenticatedController
     # @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
     # @products = shopify_products.paginate(:page => params[:page], :per_page => 30)
 
-    # @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
-    # render(json: { products: @products })
+    @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
+    # products_render = json: { products: @products }
+    puts '*** products_render ***'
+    puts @products
+    render(json: { products: @products })
   end
 
   def create

@@ -21,7 +21,7 @@ class Product < ApplicationRecord
     self.unit_price = 0
     # return unless self.variants.count.zero?
     #
-    # return unless self.units?
+    return unless self.units?
     self.unit_price = (self.product_price / self.units).round(2)
   end
 

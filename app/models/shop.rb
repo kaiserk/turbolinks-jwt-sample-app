@@ -21,6 +21,7 @@ class Shop < ApplicationRecord
 
   # after_create :update_slack
   after_create :set_default_currency
+  after_create :import_shopify_products
 
   # def self.store(shopify_session)
   #   shop = self.find_or_create_by(shopify_domain: shopify_session.url)
@@ -74,7 +75,7 @@ class Shop < ApplicationRecord
 
     shopify_products.each do |shopify_product|
       shopify_variants = shopify_product.variants
-      product = self.products.create(title: shopify_product.title, shopify_id: shopify_product.id, units: nil, product_price: nil, unit_price: nil, image_url: shopify_product.image.src)
+      product = self.products.create(title: shopify_product.title, shopify_id: shopify_product.id, units: nil, product_price: nil, unit_price: nil)
 
       shopify_variants.each do |shopify_variant|
         product.variants.create(shopify_id: shopify_variant.id, title: shopify_variant.title, variant_price: shopify_variant.price)
@@ -83,7 +84,7 @@ class Shop < ApplicationRecord
   end
 
   def sessionize
-    session = ShopifyAPI::Session.new(domain: self.shopify_domain, token: self.token, api_version: ShopifyApp.configuration.api_version)
+    session = ShopifyAPI::Session.new(domain: self.shopify_domain, token: self.shopify_token, api_version: ShopifyApp.configuration.api_version)
     ShopifyAPI::Base.activate_session(session)
   end
 
