@@ -99,7 +99,7 @@ export default function TestData() {
                     variant.title,
                     variant.variantPrice,
                     <EasyEdit
-                        type="text"
+                        type="number"
                         value={variant.units}
                         onSave={(value) => { save(variant.id, value) }}
                         onCancel={cancel}
