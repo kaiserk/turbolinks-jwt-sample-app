@@ -61,65 +61,49 @@ export default function TestData() {
             console.log('Nothing show anymore: ' + data);
         }
 
-        console.log('local = ',id);
-        const rows_array = []
         if(data && data.products.length > 0) {
-            const rows = data.products.map(product => (
-                product.variants.map(variant => {
-                    console.log(variant.id);
-                    return rows_array.push([
-                        product.title,
-                        variant.title,
-                        variant.variantPrice,
-                        <EasyEdit
-                            type="number"
-                            value={variant.units}
-                            onSave={(value) => {
-                                save(variant.id, value)
-                            }}
-                            onCancel={cancel}
-                            saveButtonLabel="Save"
-                            cancelButtonLabel="Cancel"
-                            attributes={{name: "awesome-input", id: 1}}
-                            // instructions="Instruction!"
-                        />,
-                        variant.variantPrice / (id === variant.id ? value : variant.units),
-                    ])
-                })
-            ));
-
+            initialData(data.products, id, value)
         }
-        set_table_Rows(rows_array);
     };
 
     useEffect((() => {
-        const rows_array = []
         if(data && data.products.length > 0) {
-            const rows = data.products.map(product => (
-                product.variants.map(variant => (
-                    rows_array.push([
-                        product.title,
-                        variant.title,
-                        variant.variantPrice,
-                        <EasyEdit
-                            type="number"
-                            value={variant.units}
-                            onSave={(value) => { save(variant.id, value) }}
-                            onCancel={cancel}
-                            saveButtonLabel="Save"
-                            cancelButtonLabel="Cancel"
-                            attributes={{ name: "awesome-input", id: 1}}
-                            // instructions="Instruction!"
-                        />,
-                        variant.variantPrice / variant.units,
-                    ])
-                ))
-            ));
-
+            initialData(data.products, -1, 0);
         }
-        set_table_Rows(rows_array);
 
     }), [data])
+
+    const initialData = (products, id, value) => {
+        const rows_array = []
+        const rows = products.map(product => (
+            product.variants.map(variant => {
+                let unitiprice = 0;
+                if(id === variant.id){
+                    unitiprice = variant.variantPrice / value;
+                } else {
+                    unitiprice = variant.variantPrice / variant.units;
+                }
+                unitiprice = unitiprice.toFixed(2);
+                return rows_array.push([
+                    product.title,
+                    variant.title,
+                    variant.variantPrice,
+                    <EasyEdit
+                        type="number"
+                        value={variant.units}
+                        onSave={(value) => { save(variant.id, value) }}
+                        onCancel={cancel}
+                        saveButtonLabel="Save"
+                        cancelButtonLabel="Cancel"
+                        attributes={{ name: "awesome-input", id: 1}}
+                        // instructions="Instruction!"
+                    />,
+                    unitiprice,
+                ])
+            })
+        ));
+        set_table_Rows(rows_array);
+    }
 
     // const getProductPrice = (productId) => {
     //
