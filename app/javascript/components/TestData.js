@@ -1,5 +1,5 @@
 import { gql, useQuery, useMutation } from '@apollo/client';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import EasyEdit from 'react-easy-edit';
 import Editable from "./Editable";
 import {Card, DataTable, Link, Page} from '@shopify/polaris';
@@ -41,6 +41,8 @@ export default function TestData() {
         variables: { shopId: 0 }
     });
 
+    const [table_rows, set_table_Rows] = useState([]);
+
     const inputRef = useRef();
     const [task, setTask] = useState("");
 
@@ -58,7 +60,66 @@ export default function TestData() {
         } else {
             console.log('Nothing show anymore: ' + data);
         }
+
+        console.log('local = ',id);
+        const rows_array = []
+        if(data && data.products.length > 0) {
+            const rows = data.products.map(product => (
+                product.variants.map(variant => {
+                    console.log(variant.id);
+                    return rows_array.push([
+                        product.title,
+                        variant.title,
+                        variant.variantPrice,
+                        <EasyEdit
+                            type="number"
+                            value={variant.units}
+                            onSave={(value) => {
+                                save(variant.id, value)
+                            }}
+                            onCancel={cancel}
+                            saveButtonLabel="Save"
+                            cancelButtonLabel="Cancel"
+                            attributes={{name: "awesome-input", id: 1}}
+                            // instructions="Instruction!"
+                        />,
+                        variant.variantPrice / (id === variant.id ? value : variant.units),
+                    ])
+                })
+            ));
+
+        }
+        set_table_Rows(rows_array);
     };
+
+    useEffect((() => {
+        const rows_array = []
+        if(data && data.products.length > 0) {
+            const rows = data.products.map(product => (
+                product.variants.map(variant => (
+                    rows_array.push([
+                        product.title,
+                        variant.title,
+                        variant.variantPrice,
+                        <EasyEdit
+                            type="number"
+                            value={variant.units}
+                            onSave={(value) => { save(variant.id, value) }}
+                            onCancel={cancel}
+                            saveButtonLabel="Save"
+                            cancelButtonLabel="Cancel"
+                            attributes={{ name: "awesome-input", id: 1}}
+                            // instructions="Instruction!"
+                        />,
+                        variant.variantPrice / variant.units,
+                    ])
+                ))
+            ));
+
+        }
+        set_table_Rows(rows_array);
+
+    }), [data])
 
     // const getProductPrice = (productId) => {
     //
@@ -91,27 +152,6 @@ export default function TestData() {
             <div>Something went wrong! {error}</div>
         );
     } else {
-        const rows_array = []
-        const rows = data.products.map(product => (
-            product.variants.map(variant => (
-                rows_array.push([
-                    product.title,
-                    variant.title,
-                    variant.variantPrice,
-                    <EasyEdit
-                        type="number"
-                        value={variant.units}
-                        onSave={(value) => { save(variant.id, value) }}
-                        onCancel={cancel}
-                        saveButtonLabel="Save"
-                        cancelButtonLabel="Cancel"
-                        attributes={{ name: "awesome-input", id: 1}}
-                        // instructions="Instruction!"
-                    />,
-                    variant.unitPrice
-                ])
-            ))
-        ));
 
         return (
             <Page title="Products & Variants">
@@ -125,7 +165,7 @@ export default function TestData() {
                         'numeric',
                     ]}
                     headings={['Product Title', 'Variant Name', 'Price', 'Units', 'Unit Price']}
-                    rows={rows_array}
+                    rows={table_rows}
                     />
                 </Card>
             </Page>
