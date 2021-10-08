@@ -42,31 +42,29 @@ export default function TestData() {
     });
 
     const [table_rows, set_table_Rows] = useState([]);
+    const [products, setProducts] = useState([]);
 
     const inputRef = useRef();
-    const [task, setTask] = useState("");
 
-    const [updateVariant, { data2, loading2, error2 }] = useMutation(UPDATE_QUERY,
-        {
-            refetchQueries:  [
-                PRODUCTS_QUERY,
-                'GetProducts'
-            ],
-        });
+    const [updateVariant, ret] = useMutation(UPDATE_QUERY);
 
     const save = (id, value) => {
         const fValue = parseFloat(value);
 
         updateVariant({ variables: { id: id, units: fValue }});
 
-        if(loading2) {
+        if(ret.loading) {
             console.log('loading')
-        } else if (error2) {
+        } else if (ret.error) {
             console.log('Mutation error: ' + error)
         } else {
             console.log('Nothing to show anymore: ' + data);
         }
-        console.log(data2);
+
+//        const tmpData = [...products];
+        // just a min.
+        //tmpData[0].units = 1;
+        console.log(products)
 
         if(data && data.products.length > 0) {
             initialData(data.products, id, value)
@@ -75,12 +73,14 @@ export default function TestData() {
 
     useEffect((() => {
         if(data && data.products.length > 0) {
+            setProducts(data.products);
             initialData(data.products, -1, 0);
         }
 
     }), [data])
 
     const initialData = (products, id, value) => {
+
         const rows_array = []
         const rows = products.map(product => (
             product.variants.map(variant => {
@@ -116,6 +116,7 @@ export default function TestData() {
                 ])
             })
         ));
+        console.log('------>', table_rows, rows_array);
         set_table_Rows(rows_array);
     }
 
@@ -139,6 +140,7 @@ export default function TestData() {
     // };
 
     const cancel = () => {};
+    console.log(table_rows)
 
 
     if (loading) {
