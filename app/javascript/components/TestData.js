@@ -46,11 +46,17 @@ export default function TestData() {
     const inputRef = useRef();
     const [task, setTask] = useState("");
 
-    const [updateVariant, { loading2, error2, data2 }] = useMutation(UPDATE_QUERY);
+    const [updateVariant, { data2, loading2, error2 }] = useMutation(UPDATE_QUERY,
+        {
+            refetchQueries:  [
+                PRODUCTS_QUERY,
+                'GetProducts'
+            ],
+        });
 
     const save = (id, value) => {
         const fValue = parseFloat(value);
-        console.log(id);
+
         updateVariant({ variables: { id: id, units: fValue }});
 
         if(loading2) {
@@ -58,8 +64,9 @@ export default function TestData() {
         } else if (error2) {
             console.log('Mutation error: ' + error)
         } else {
-            console.log('Nothing show anymore: ' + data);
+            console.log('Nothing to show anymore: ' + data);
         }
+        console.log(data2);
 
         if(data && data.products.length > 0) {
             initialData(data.products, id, value)
@@ -81,12 +88,19 @@ export default function TestData() {
                 if(id === variant.id){
                     unitiprice = variant.variantPrice / value;
                 } else {
-                    unitiprice = variant.variantPrice / variant.units;
+                    unitiprice = variant.variantPrice / variant.units; // variant.units is storing the old value here, when user updates this, data.produ// ct.variants.units is not being updated
+
+                    console.log('variant price: ' + variant.variantPrice + ' divided by units: ' + variant.units);
                 }
                 unitiprice = unitiprice.toFixed(2);
+
+                let vTitle = variant.title
+                if (vTitle === 'Default Title') {
+                    vTitle = 'N/A (Product without variant)';
+                }
                 return rows_array.push([
                     product.title,
-                    variant.title,
+                    vTitle,
                     variant.variantPrice,
                     <EasyEdit
                         type="number"
