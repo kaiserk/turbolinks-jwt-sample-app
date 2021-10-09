@@ -37,7 +37,7 @@ const UPDATE_QUERY = gql`
 export default function TestData() {
     let input;
 
-    const { loading, error, data } = useQuery(PRODUCTS_QUERY, {
+    let { loading, error, data } = useQuery(PRODUCTS_QUERY, {
         variables: { shopId: 0 }
     });
 
@@ -46,7 +46,17 @@ export default function TestData() {
 
     const inputRef = useRef();
 
-    const [updateVariant, ret] = useMutation(UPDATE_QUERY);
+    // const [updateVariant, ret] = useMutation(UPDATE_QUERY);
+
+    // Refetches two queries after mutation completes
+    let [updateVariant, ret] = useMutation(UPDATE_QUERY, {
+        refetchQueries: [
+            PRODUCTS_QUERY, // DocumentNode object parsed with gql
+            'GetProducts' // Query name
+        ],
+    });
+
+
 
     const save = (id, value) => {
         const fValue = parseFloat(value);
@@ -54,11 +64,11 @@ export default function TestData() {
         updateVariant({ variables: { id: id, units: fValue }});
 
         if(ret.loading) {
-            console.log('loading')
+            console.log('loading...')
         } else if (ret.error) {
-            console.log('Mutation error: ' + error)
+            console.log('Mutation error: ' + ret.error)
         } else {
-            console.log('Nothing to show anymore: ' + data);
+            console.log('Nothing to show anymore: ' + ret.data);
         }
 
 //        const tmpData = [...products];
@@ -80,7 +90,6 @@ export default function TestData() {
     }), [data])
 
     const initialData = (products, id, value) => {
-
         const rows_array = []
         const rows = products.map(product => (
             product.variants.map(variant => {
