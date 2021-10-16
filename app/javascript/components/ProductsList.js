@@ -42,7 +42,7 @@ export default function ProductsList() {
 
     const [table_rows, set_table_Rows] = useState([]);
     const [products, setProducts] = useState([]);
-    const rowsPerPage = 1;
+    const rowsPerPage = 2;
     const [pos, setPos] = useState(1);
     const [pagination, setPagination] = useState(1);
 
@@ -152,9 +152,14 @@ export default function ProductsList() {
 
     const cancel = () => {};
     useEffect(()=>{
-        setPagination(Math.round(table_rows.length / rowsPerPage));
-    }, [table_rows]);
+        let totalPageNo = Math.round(table_rows.length / rowsPerPage);
+        if (totalPageNo === 0) {
+            setPagination(1);
+        } else {
+            setPagination(Math.round(table_rows.length / rowsPerPage));
+        }
 
+    }, [table_rows]);
 
     if (loading) {
         return (
@@ -181,17 +186,17 @@ export default function ProductsList() {
                     rows={table_rows.slice(rowsPerPage * (pos - 1), rowsPerPage * pos)}
                     />
                 </Card>
-                <Pagination
-                    label={`Page ${pos} of ${pagination}`} //show 2 per page
-                    hasPrevious={pos > 1? true: false}
-                    onPrevious={() => {
-                        setPos(pos - 1)
-                    }}
-                    hasNext={pos < pagination? true: false}
-                    onNext={() => {
-                        setPos(pos + 1);
-                    }}
-                />
+                    <Pagination
+                        label={`Page ${pos} of ${pagination}`} //show 2 per page
+                        hasPrevious={pos > 1? true: false}
+                        onPrevious={() => {
+                            setPos(pos - 1)
+                        }}
+                        hasNext={pos < pagination? true: false}
+                        onNext={() => {
+                            setPos(pos + 1);
+                        }}
+                    />
             </Page>
         );
     }
