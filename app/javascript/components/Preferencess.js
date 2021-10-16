@@ -32,6 +32,10 @@ const Preferencess = () => {
 
     const handleChange = useCallback((newValue) => setValue(newValue), []);
     const handleChange2 = useCallback((newValue) => setValue(newValue), []);
+    const handleChange3 = useCallback((newValue) => setValue(newValue), []);
+
+    if (loading) {
+        return (
             <div>Loading</div>
         );
     } else if (error) {
