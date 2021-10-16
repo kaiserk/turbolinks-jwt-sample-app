@@ -4,7 +4,7 @@ import {Navigation} from '@shopify/polaris';
 
 export default function Nav() {
     return (
-        <Navigation location="/">
+        <Navigation location="/productslist">
             <Navigation.Section
                 items={[
                     {
@@ -14,14 +14,27 @@ export default function Nav() {
                     },
                     {
                         url: '/preferencess',
-                        label: 'Preferencess',
+                        label: 'Preferences',
                         // icon: OrdersMajor,
                         // badge: '15',
                     },
                     {
-                        url: 'mailto:info@appsbysimple.com',
+                        url: '/help',
                         label: 'Help',
-                        // icon: ProductsMajor,
+                        selected: true,
+                        subNavigationItems: [
+                            {
+                                url: '/admin/products',
+                                disabled: false,
+                                selected: true,
+                                label: 'All products',
+                            },
+                            {
+                                url: '/admin/products/inventory',
+                                disabled: false,
+                                label: 'Inventory',
+                            },
+                        ],
                     },
                 ]}
             />

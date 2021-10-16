@@ -14,6 +14,7 @@ import ProductsList from "./ProductsList";
 import Preferencess from "./Preferencess";
 import Nav from "./Navigation";
 import "./styles.css";
+import Help from "./Help";
 
 
 
@@ -54,6 +55,7 @@ function App() {
                             <Switch>
                                 <Route path="/productslist" exact component={ProductsList} />
                                 <Route path="/preferencess" component={Preferencess} />
+                                <Route path="/help" component={Help} />
                             </Switch>
                         </Router>
                     </div>

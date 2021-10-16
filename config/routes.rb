@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   # get '/products', to: 'products#index'
   get '/preferencess', to: 'dashboard#index'
   get '/productslist', to: 'dashboard#index'
+  get '/help', to: 'dashboard#index'
   get '/dashboard', to: 'dashboard#index'
   get '/show-collection', to: "dashboard#show_collection", as: 'show_collection'
   get '/manual-uninstall', to: "dashboard#manual_uninstall", as: 'manual_uninstall'
