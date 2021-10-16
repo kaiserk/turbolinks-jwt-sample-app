@@ -9,8 +9,13 @@ import {AppProvider, EmptyState, Page} from '@shopify/polaris';
 import {authenticatedFetch} from '@shopify/app-bridge-utils';
 import enTranslations from '@shopify/polaris/locales/en.json';
 import React, {useState, useRef} from 'react';
-import TestData from "./TestData";
-import Editable from "./Editable";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import ProductsList from "./ProductsList";
+import Preferencess from "./Preferencess";
+import Nav from "./Navigation";
+import "./styles.css";
+
+
 
 const client = new ApolloClient({
 
@@ -36,28 +41,27 @@ function App() {
       Enclose the input element as the children to the Editable component to make it as inline editable.
     */
     return (
-
         <AppProvider i18n={enTranslations}>
             <ApolloProvider client={client}>
+                <link
+                    rel="stylesheet"
+                    href="https://unpkg.com/@shopify/polaris@7.0.0/build/esm/styles.css"
+                />
+                <div className="main">
+                    <Nav />
+                    <div className={'content_wrapper'}>
+                        <Router>
+                            <Switch>
+                                <Route path="/productslist" exact component={ProductsList} />
+                                <Route path="/preferencess" component={Preferencess} />
+                            </Switch>
+                        </Router>
+                    </div>
+                </div>
+
                 {/*<Page>*/}
-                {/*    <EmptyState>*/}
-                        <TestData/>
-                        {/*<Editable*/}
-                        {/*    text={task}*/}
-                        {/*    placeholder="Write a task name"*/}
-                        {/*    childRef={inputRef}*/}
-                        {/*    type="input"*/}
-                        {/*>*/}
-                        {/*    <input*/}
-                        {/*        ref={inputRef}*/}
-                        {/*        type="text"*/}
-                        {/*        name="task"*/}
-                        {/*        placeholder="Write a task name"*/}
-                        {/*        value={task}*/}
-                        {/*        onChange={e => setTask(e.target.value)}*/}
-                        {/*    />*/}
-                        {/*</Editable>*/}
-                    {/*</EmptyState>*/}
+                {/*    <Nav/>*/}
+                {/*    <ProductsList/>*/}
                 {/*</Page>*/}
             </ApolloProvider>
         </AppProvider>

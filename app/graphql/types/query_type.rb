@@ -13,6 +13,15 @@ module Types
       Product.where(shop_id: shop_id)
     end
 
+    #PREFERENCES
+    field :preferences, [Types::PreferenceType], null: true do
+      argument :shop_id, Integer, required: true
+    end
+
+    def preferences(shop_id:)
+      Preference.where(shop_id: shop_id)
+    end
+
     # field :product_name, [Types::String], null: true do
     #   argument :product_id, Integer, required: true
     # end

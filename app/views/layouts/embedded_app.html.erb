@@ -5,6 +5,10 @@
   <% application_name = ShopifyApp.configuration.application_name %>
   <title><%= application_name %></title>
   <%= stylesheet_link_tag 'application' %>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/@shopify/polaris@7.0.0/build/esm/styles.css"
+    />
   <% if ShopifyApp.use_webpacker? %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <% else %>
@@ -15,20 +19,20 @@
 </head>
 
 <body>
-<%= render 'shared/header' %>
-<div class="container">
-  <%= render 'shared/messages' %>
-</div>
-<div class="container section" data-section="message">
-  <div class="row">
-    <div class="col-xs-12">
+<%#= render 'shared/header' %>
+<!--<div class="container">-->
+  <%#= render 'shared/messages' %>
+<!--</div>-->
+<!--<div class="container section" data-section="message">-->
+<!--  <div class="row">-->
+<!--    <div class="col-xs-12">-->
       <%= yield %>
-    </div>
-  </div>
-</div>
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 <%= render 'shared/footer' %>
 
-<%= render 'layouts/flash_messages' %>
+<%#= render 'layouts/flash_messages' %>
 
 <script src="https://unpkg.com/@shopify/app-bridge"></script>
 

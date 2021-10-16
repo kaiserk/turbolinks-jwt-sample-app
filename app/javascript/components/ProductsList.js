@@ -2,8 +2,7 @@ import { gql, useQuery, useMutation } from '@apollo/client';
 import React, {useEffect, useRef, useState} from 'react';
 import EasyEdit from 'react-easy-edit';
 import Editable from "./Editable";
-import {Card, DataTable, Link, Page} from '@shopify/polaris';
-
+import {Card, DataTable, Link, Page, Pagination} from '@shopify/polaris';
 
 
 const PRODUCTS_QUERY = gql`
@@ -34,29 +33,30 @@ const UPDATE_QUERY = gql`
   }
 `;
 
-export default function TestData() {
+export default function ProductsList() {
     let input;
 
-    let { loading, error, data } = useQuery(PRODUCTS_QUERY, {
+    const { loading, error, data } = useQuery(PRODUCTS_QUERY, {
         variables: { shopId: 0 }
     });
 
     const [table_rows, set_table_Rows] = useState([]);
     const [products, setProducts] = useState([]);
+    const rowsPerPage = 1;
+    const [pos, setPos] = useState(1);
+    const [pagination, setPagination] = useState(1);
 
     const inputRef = useRef();
 
     // const [updateVariant, ret] = useMutation(UPDATE_QUERY);
 
     // Refetches two queries after mutation completes
-    let [updateVariant, ret] = useMutation(UPDATE_QUERY, {
+    const [updateVariant, ret] = useMutation(UPDATE_QUERY, {
         refetchQueries: [
             PRODUCTS_QUERY, // DocumentNode object parsed with gql
             'GetProducts' // Query name
         ],
     });
-
-
 
     const save = (id, value) => {
         const fValue = parseFloat(value);
@@ -74,7 +74,7 @@ export default function TestData() {
 //        const tmpData = [...products];
         // just a min.
         //tmpData[0].units = 1;
-        console.log(products)
+        console.log(products);
 
         if(data && data.products.length > 0) {
             initialData(data.products, id, value)
@@ -107,13 +107,15 @@ export default function TestData() {
                 if (vTitle === 'Default Title') {
                     vTitle = 'N/A (Product without variant)';
                 }
+
+                let vUnits = String(variant.units);
                 return rows_array.push([
                     product.title,
                     vTitle,
                     variant.variantPrice,
                     <EasyEdit
                         type="number"
-                        value={variant.units}
+                        value={vUnits}
                         onSave={(value) => { save(variant.id, value) }}
                         onCancel={cancel}
                         saveButtonLabel="Save"
@@ -149,7 +151,9 @@ export default function TestData() {
     // };
 
     const cancel = () => {};
-    console.log(table_rows)
+    useEffect(()=>{
+        setPagination(Math.round(table_rows.length / rowsPerPage));
+    }, [table_rows]);
 
 
     if (loading) {
@@ -164,7 +168,7 @@ export default function TestData() {
 
         return (
             <Page title="Products & Variants">
-                <Card>
+                 <Card>
                     <DataTable
                         columnContentTypes={[
                         'text',
@@ -174,10 +178,21 @@ export default function TestData() {
                         'numeric',
                     ]}
                     headings={['Product Title', 'Variant Name', 'Price', 'Units', 'Unit Price']}
-                    rows={table_rows}
+                    rows={table_rows.slice(rowsPerPage * (pos - 1), rowsPerPage * pos)}
                     />
                 </Card>
+                <Pagination
+                    label={`Page ${pos} of ${pagination}`} //show 2 per page
+                    hasPrevious={pos > 1? true: false}
+                    onPrevious={() => {
+                        setPos(pos - 1)
+                    }}
+                    hasNext={pos < pagination? true: false}
+                    onNext={() => {
+                        setPos(pos + 1);
+                    }}
+                />
             </Page>
         );
     }
-}
+};
