@@ -92,7 +92,7 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'json'
-gem 'pg', '~> 0.20'
+# gem 'pg', '~> 0.20'
 gem 'mini_racer'
 
 group :development do
@@ -123,3 +123,4 @@ end
 
 
 gem 'graphiql-rails', group: :development
+gem 'pg', group: :production
