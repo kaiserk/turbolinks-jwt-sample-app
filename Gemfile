@@ -93,6 +93,7 @@ gem 'jquery-rails'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'json'
 gem 'pg', '~> 0.20'
+gem 'mini_racer'
 
 group :development do
   # Use sqlite3 as the database for Active Record
