@@ -4,12 +4,12 @@ import step1 from '../../assets/images/step1.png';
 import step2 from '../../assets/images/step2.png';
 
 
-const HelpCollection = () => {
+const Help = () => {
     return (
         <Layout>
             <Layout.Section>
                 <Card sectioned>
-                    <Heading element="h2">How to Display Unit Prices on Shopify Collections Pages</Heading>
+                    <Heading element="h2">How to Remove Unit Prices from Shopify Collections Pages</Heading>
                     <MediaCard
                         title="1. Open your theme's code"
                         description="From your admin dashboard, in the menu on the left side, click Online Store then from the 'Actions' dropdown select the 'Edit code' option."
@@ -46,28 +46,9 @@ const HelpCollection = () => {
                     </MediaCard>
                 </Card>
                 <TextContainer>
-                    <Heading>3. Plant a snippet of code</Heading>
+                    <Heading>3. Remove the snippet of code</Heading>
                     <p>
-                        <Heading element="h4">On the right side of the screen, find this line of code:</Heading>
-                        <p>
-                            {`
-                                {% include 'product-price-listing', product: product, show_vendor: show_vendor %}
-                            `}
-                        </p>
-                    </p>
-                    <p>
-                        <Heading element="h4">In old stores the line may look like:</Heading>
-                        <p>
-                            {`
-                                {% include 'product-price', variant: product %}
-                            `}
-                        </p>
-                    </p>
-                </TextContainer>
-                <TextContainer>
-                    <Heading>4. Then, directly after that line of code, paste this:</Heading>
-                    <p>
-                        <Heading element="h4">Then, directly after that line of code, paste this:</Heading>
+                        <Heading element="h4">On the right side of the screen, find and remove this line of code:</Heading>
                         <p>
                             {`
                                 <%= '<div class="insert-unit-pricing" data-product="{{ product.id }}"></div>' %>
@@ -77,8 +58,8 @@ const HelpCollection = () => {
                 </TextContainer>
             </Layout.Section>
         </Layout>
+
     );
 }
 
-export default HelpCollection;
-
+export default Help;

@@ -28,7 +28,7 @@ class ChargesController < AuthenticatedController
 
     if charge.status == "accepted" || charge.status == "active"
       save_charge
-      charge.activate
+      # charge.activate
       redirect_to thanks_path
       # redirect_to "https://#{@shop.shopify_domain}/admin/apps/" + ENV['APP_NAME'] + "/thanks"
     else

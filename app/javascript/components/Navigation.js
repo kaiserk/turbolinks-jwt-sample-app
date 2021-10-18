@@ -4,12 +4,12 @@ import {Navigation} from '@shopify/polaris';
 
 export default function Nav() {
     return (
-        <Navigation location="/productslist">
+        <Navigation location="/">
             <Navigation.Section
                 items={[
                     {
                         url: '/productslist',
-                        label: 'Products',
+                        label: 'Setup Pricing',
                         // icon: HomeMajor,
                     },
                     {
@@ -19,22 +19,15 @@ export default function Nav() {
                         // badge: '15',
                     },
                     {
-                        url: '/help',
-                        label: 'Help',
-                        selected: true,
-                        subNavigationItems: [
-                            {
-                                url: '/admin/products',
-                                disabled: false,
-                                selected: true,
-                                label: 'All products',
-                            },
-                            {
-                                url: '/admin/products/inventory',
-                                disabled: false,
-                                label: 'Inventory',
-                            },
-                        ],
+                        url: '/help-collection-page',
+                        label: 'Collection Page Setup',
+                    },
+                    {
+                        url: '/help-manual-uninstall',
+                        label: 'Manual Uninstall',
+                    },{
+                        url: '/contactus',
+                        label: 'Contact Us',
                     },
                 ]}
             />

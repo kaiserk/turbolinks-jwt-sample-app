@@ -11,8 +11,9 @@ Rails.application.routes.draw do
   get '/productslist', to: 'dashboard#index'
   get '/help', to: 'dashboard#index'
   get '/dashboard', to: 'dashboard#index'
-  get '/show-collection', to: "dashboard#show_collection", as: 'show_collection'
-  get '/manual-uninstall', to: "dashboard#manual_uninstall", as: 'manual_uninstall'
+  get '/help-collection-page', to: "dashboard#index"
+  get '/help-manual-uninstall', to: "dashboard#index"
+  get '/contactus', to: "dashboard#index"
 
   get 'widget', to: "scripts#widget", :as => 'widget' #re-enable when ready
   get 'thanks', to: "charges#thanks", as: 'thanks'

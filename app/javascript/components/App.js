@@ -15,7 +15,8 @@ import Preferencess from "./Preferencess";
 import Nav from "./Navigation";
 import "./styles.css";
 import Help from "./Help";
-
+import HelpCollection from "./HelpCollection";
+import ContactUs from "./ContactUs";
 
 
 const client = new ApolloClient({
@@ -53,9 +54,12 @@ function App() {
                     <div className={'content_wrapper'}>
                         <Router>
                             <Switch>
+                                <Route path="/dashboard" exact component={ProductsList} />
                                 <Route path="/productslist" exact component={ProductsList} />
                                 <Route path="/preferencess" component={Preferencess} />
-                                <Route path="/help" component={Help} />
+                                <Route path="/help-collection-page" component={Help} />
+                                <Route path="/help-manual-uninstall" component={HelpCollection} />
+                                <Route path="/contactus" exact component={ContactUs} />
                             </Switch>
                         </Router>
                     </div>

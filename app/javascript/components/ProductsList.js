@@ -42,7 +42,7 @@ export default function ProductsList() {
 
     const [table_rows, set_table_Rows] = useState([]);
     const [products, setProducts] = useState([]);
-    const rowsPerPage = 2;
+    const rowsPerPage = 20;
     const [pos, setPos] = useState(1);
     const [pagination, setPagination] = useState(1);
 
